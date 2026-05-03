@@ -1,0 +1,1979 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mytour.vn — UI/UX Mockup · 9 Màn Hình</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & Variables ─────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --pink:       #D4537E;
+  --pink-dark:  #993556;
+  --pink-deep:  #6B1F3A;
+  --pink-light: #FBEAF0;
+  --pink-mid:   #F0A8BE;
+  --gold:       #C9A84C;
+  --cream:      #FDF6F0;
+  --charcoal:   #1C1C2E;
+  --ink:        #2D2D3F;
+  --muted:      #7A7A95;
+  --border:     #EDE8F5;
+  --white:      #FFFFFF;
+  --success:    #2ECC71;
+  --warn:       #F39C12;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'DM Sans', sans-serif;
+  --shadow-soft: 0 4px 24px rgba(153,53,86,0.10);
+  --shadow-card: 0 2px 12px rgba(28,28,46,0.08);
+  --radius:     14px;
+  --radius-sm:  8px;
+  --radius-xl:  24px;
+}
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); background: #F5F0F8; color: var(--ink); }
+
+/* ── Outer Layout ──────────────────────────────────────── */
+.page-header {
+  background: var(--charcoal);
+  padding: 40px 0 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.page-header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(212,83,126,0.25), transparent);
+}
+.page-header h1 {
+  font-family: var(--font-display);
+  font-size: 42px;
+  color: var(--white);
+  position: relative;
+  letter-spacing: -1px;
+}
+.page-header h1 span { color: var(--pink); }
+.page-header p { color: rgba(255,255,255,0.55); font-size: 15px; margin-top: 8px; position: relative; }
+.subtitle-tag {
+  display: inline-block;
+  background: rgba(212,83,126,0.2);
+  border: 1px solid rgba(212,83,126,0.4);
+  color: var(--pink-mid);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+/* ── Tab Navigation ────────────────────────────────────── */
+.tab-nav {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.tab-nav-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tab-nav-inner::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex: 1; 
+  flex-shrink: 1; 
+  
+  justify-content: center; 
+  
+  padding: 12px 8px; 
+  
+  /* Giữ nguyên các thuộc tính cũ bên dưới */
+  font-family: var(--font-body);
+  font-size: 12px; /* Có thể giảm xuống 11px hoặc 12px nếu màn hình nhỏ */
+  font-weight: 500;
+  color: var(--muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-bottom: 2.5px solid transparent;
+  transition: all .2s;
+  display: flex;
+  align-items: center;
+  gap: 5px; 
+  white-space: nowrap;
+
+}
+.tab-btn:hover { color: var(--pink); }
+.tab-btn.active { color: var(--pink-dark); border-bottom-color: var(--pink); }
+.tab-btn .num {
+  width: 20px; height: 20px;
+  background: var(--pink-light);
+  color: var(--pink-dark);
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.tab-btn.active .num { background: var(--pink); color: #fff; }
+
+/* ── Screen Wrapper ────────────────────────────────────── */
+.screen { display: none; }
+.screen.active { display: block; }
+.screen-wrap {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 40px 24px 60px;
+}
+.screen-label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+.screen-label .badge {
+  background: var(--pink);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 20px;
+}
+.screen-label h2 {
+  font-family: var(--font-display);
+  font-size: 28px;
+  color: var(--charcoal);
+  letter-spacing: -0.5px;
+}
+.screen-label p { font-size: 14px; color: var(--muted); margin-top: 2px; }
+
+/* ── Phone Frame ───────────────────────────────────────── */
+.phone-frame {
+  width: 375px;
+  min-height: 780px;
+  background: var(--white);
+  border-radius: 40px;
+  box-shadow: 0 32px 80px rgba(28,28,46,0.22), 0 0 0 8px var(--charcoal), 0 0 0 10px #3a3a50;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+}
+.phone-notch {
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 120px; height: 28px;
+  background: var(--charcoal);
+  border-radius: 0 0 18px 18px;
+  z-index: 10;
+}
+.phone-content { padding-top: 36px; height: 100%; overflow-y: auto; }
+.phone-content::-webkit-scrollbar { display: none; }
+
+/* ── Wide Frame (tablet-like for desktop screens) ─────── */
+.wide-frame {
+  width: 100%;
+  max-width: 960px;
+  background: var(--white);
+  border-radius: 20px;
+  box-shadow: var(--shadow-soft), 0 0 0 1px var(--border);
+  overflow: hidden;
+}
+
+/* ── Layout helpers ────────────────────────────────────── */
+.two-col { display: flex; gap: 40px; align-items: flex-start; }
+.info-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.annotation {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-card);
+}
+.annotation h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--pink-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.annotation ul { display: flex; flex-direction: column; gap: 7px; }
+.annotation li {
+  font-size: 13px;
+  color: var(--ink);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.5;
+}
+.annotation li::before { content: '→'; color: var(--pink); flex-shrink: 0; margin-top: 1px; }
+.annotation .tag {
+  display: inline-block;
+  background: var(--pink-light);
+  color: var(--pink-dark);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ── Design System Grid ────────────────────────────────── */
+.ds-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+.ds-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow-card);
+}
+.ds-card h3 {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+}
+.color-swatch {
+  height: 44px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: flex-end;
+  padding: 6px 8px;
+}
+.color-swatch span { font-size: 10px; font-weight: 600; }
+.type-sample { margin-bottom: 10px; }
+.type-sample .label { font-size: 10px; color: var(--muted); margin-bottom: 3px; }
+.comp-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; align-items: center; }
+.btn-s { padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; border: none; font-family: var(--font-body); }
+.btn-s.primary { background: var(--pink); color: #fff; }
+.btn-s.outline { background: transparent; color: var(--pink); border: 1.5px solid var(--pink); }
+.btn-s.ghost { background: var(--pink-light); color: var(--pink-dark); border: none; }
+.chip-s { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+.flow-diagram {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+}
+.flow-diagram h3 { font-family: var(--font-display); font-size: 18px; color: var(--charcoal); margin-bottom: 20px; }
+.flow-row { display: flex; align-items: center; gap: 0; flex-wrap: wrap; gap: 6px; }
+.flow-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.flow-node .node-circle {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: var(--pink-light);
+  border: 2px solid var(--pink-mid);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  transition: all .2s;
+}
+.flow-node.active .node-circle { background: var(--pink); border-color: var(--pink-dark); }
+.flow-node .node-label { font-size: 10px; color: var(--muted); text-align: center; max-width: 58px; line-height: 1.3; }
+.flow-node.active .node-label { color: var(--pink-dark); font-weight: 600; }
+.flow-arrow { font-size: 18px; color: var(--pink-mid); margin: 0 4px; margin-top: -18px; }
+
+/* ══ SCREEN SPECIFIC STYLES ════════════════════════════════ */
+
+/* ── Navbar ────────────────────────────────────────────── */
+.mock-navbar {
+  background: var(--pink);
+  padding: 0 20px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+.mock-navbar::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+}
+.navbar-logo { color: #fff; font-family: var(--font-display); font-size: 20px; font-weight: 800; flex-shrink: 0; }
+.navbar-search-mock {
+  flex: 1;
+  background: rgba(255,255,255,0.2);
+  border-radius: 20px;
+  padding: 7px 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+.navbar-search-mock span { font-size: 12px; color: rgba(255,255,255,0.8); }
+.navbar-icons { display: flex; gap: 10px; margin-left: auto; }
+.navbar-icons .icon { color: rgba(255,255,255,0.9); font-size: 16px; cursor: pointer; }
+
+/* ── Hero Banner ───────────────────────────────────────── */
+.hero-mock {
+  background: linear-gradient(160deg, var(--pink-dark) 0%, var(--pink) 55%, #E8748A 100%);
+  padding: 28px 20px 40px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-mock::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+}
+.hero-mock::after {
+  content: '';
+  position: absolute;
+  bottom: -20px; left: -20px;
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+}
+.hero-tagline { font-size: 10px; color: rgba(255,255,255,0.7); font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+.hero-title { font-family: var(--font-display); font-size: 26px; color: #fff; line-height: 1.2; margin-bottom: 6px; }
+.hero-sub { font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+.hero-search {
+  background: #fff;
+  border-radius: 16px;
+  padding: 14px 16px;
+  position: relative;
+  z-index: 1;
+}
+.hero-search-row { display: flex; align-items: center; gap: 10px; }
+.hero-search-row input { border: none; outline: none; font-size: 13px; flex: 1; font-family: var(--font-body); color: var(--ink); background: transparent; }
+.hero-search-row input::placeholder { color: #BBB; }
+.hero-search-row .search-btn { background: var(--pink); color: #fff; border: none; border-radius: 10px; padding: 8px 14px; font-size: 12px; font-weight: 600; cursor: pointer; flex-shrink: 0; font-family: var(--font-body); }
+.date-row { display: flex; gap: 8px; margin-top: 10px; border-top: 1px solid #F0EEF5; padding-top: 10px; }
+.date-pill { flex: 1; display: flex; align-items: center; gap: 5px; background: var(--pink-light); border-radius: 8px; padding: 6px 10px; }
+.date-pill .dp-label { font-size: 9px; color: var(--muted); display: block; }
+.date-pill .dp-val { font-size: 11px; color: var(--ink); font-weight: 600; }
+.hero-stats { display: flex; gap: 14px; margin-top: 18px; position: relative; z-index: 1; }
+.hero-stat { display: flex; flex-direction: column; align-items: center; }
+.hero-stat .val { font-family: var(--font-display); font-size: 18px; color: #fff; font-weight: 700; }
+.hero-stat .lbl { font-size: 10px; color: rgba(255,255,255,0.65); }
+.hero-stat-sep { width: 1px; background: rgba(255,255,255,0.2); align-self: stretch; }
+
+/* ── Section ───────────────────────────────────────────── */
+.section-head { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px 8px; }
+.section-head h3 { font-size: 15px; font-weight: 600; color: var(--charcoal); }
+.section-head a { font-size: 12px; color: var(--pink); font-weight: 500; cursor: pointer; }
+.chips-scroll { display: flex; gap: 8px; padding: 8px 20px; overflow-x: auto; scrollbar-width: none; }
+.chips-scroll::-webkit-scrollbar { display: none; }
+.filter-chip { flex-shrink: 0; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; border: 1.5px solid var(--border); color: var(--muted); background: #fff; cursor: pointer; }
+.filter-chip.active { background: var(--pink); color: #fff; border-color: var(--pink); }
+
+/* ── Hotel Card ────────────────────────────────────────── */
+.hotel-cards-scroll { display: flex; gap: 14px; padding: 8px 20px; overflow-x: auto; scrollbar-width: none; }
+.hotel-cards-scroll::-webkit-scrollbar { display: none; }
+.hcard {
+  flex-shrink: 0;
+  width: 180px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border);
+  cursor: pointer;
+}
+.hcard-img {
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44px;
+  position: relative;
+}
+.hcard-img.g1 { background: linear-gradient(135deg, #fce4ec, #f8bbd9); }
+.hcard-img.g2 { background: linear-gradient(135deg, #e8eaf6, #c5cae9); }
+.hcard-img.g3 { background: linear-gradient(135deg, #e0f7fa, #b2ebf2); }
+.hcard-img.g4 { background: linear-gradient(135deg, #f9fbe7, #dcedc8); }
+.hcard-stars { position: absolute; top: 8px; left: 8px; background: rgba(255,255,255,0.92); border-radius: 6px; padding: 2px 7px; font-size: 10px; font-weight: 700; color: var(--gold); }
+.hcard-fav { position: absolute; top: 8px; right: 8px; background: rgba(255,255,255,0.9); border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-size: 13px; }
+.hcard-body { padding: 10px 12px 12px; }
+.hcard-name { font-size: 12px; font-weight: 600; color: var(--charcoal); line-height: 1.3; margin-bottom: 3px; }
+.hcard-loc { font-size: 10px; color: var(--muted); margin-bottom: 6px; }
+.hcard-row { display: flex; align-items: center; justify-content: space-between; }
+.hcard-price { font-size: 13px; font-weight: 700; color: var(--pink); }
+.hcard-price span { font-size: 9px; color: var(--muted); font-weight: 400; }
+.hcard-rating { font-size: 10px; color: var(--muted); }
+
+/* ── Bottom nav ────────────────────────────────────────── */
+.bottom-nav-mock {
+  display: flex;
+  border-top: 1px solid var(--border);
+  padding: 8px 0 16px;
+  background: #fff;
+}
+.bnav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+}
+.bnav-item .bi { font-size: 20px; }
+.bnav-item .bl { font-size: 9px; color: var(--muted); font-weight: 500; }
+.bnav-item.active .bl { color: var(--pink); }
+.bnav-item.active .bi { filter: sepia(1) saturate(3) hue-rotate(300deg); }
+
+/* ── Hotel List (screen 2) ─────────────────────────────── */
+.hlist-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+.hlist-img {
+  width: 80px;
+  height: 72px;
+  border-radius: 12px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+}
+.hlist-info { flex: 1; }
+.hlist-name { font-size: 13px; font-weight: 600; color: var(--charcoal); margin-bottom: 2px; }
+.hlist-loc { font-size: 11px; color: var(--muted); margin-bottom: 5px; }
+.hlist-row { display: flex; align-items: center; justify-content: space-between; }
+.hlist-price { font-size: 14px; font-weight: 700; color: var(--pink); }
+.hlist-price span { font-size: 10px; color: var(--muted); font-weight: 400; }
+.hlist-rating { display: flex; align-items: center; gap: 3px; font-size: 11px; color: var(--muted); }
+.hlist-rating strong { color: var(--charcoal); font-size: 12px; }
+.sort-bar { display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; background: var(--cream); border-bottom: 1px solid var(--border); }
+.sort-bar span { font-size: 12px; color: var(--muted); }
+.sort-bar select { font-size: 12px; border: 1px solid var(--border); border-radius: 6px; padding: 4px 8px; font-family: var(--font-body); color: var(--ink); background: #fff; }
+
+/* ── Hotel Detail (screen 3) ───────────────────────────── */
+.detail-gallery { display: grid; grid-template-columns: 2fr 1fr; gap: 4px; height: 170px; }
+.gal-main { border-radius: 0; display: flex; align-items: center; justify-content: center; font-size: 60px; background: linear-gradient(135deg, #fce4ec, #f8bbd9); }
+.gal-side { display: grid; grid-template-rows: 1fr 1fr; gap: 4px; }
+.gal-side > div { display: flex; align-items: center; justify-content: center; font-size: 28px; }
+.gal-side > div:first-child { background: linear-gradient(135deg, #e8eaf6, #c5cae9); }
+.gal-side > div:last-child { background: linear-gradient(135deg, #e0f7fa, #b2ebf2); }
+.detail-section { padding: 14px 20px; border-bottom: 1px solid var(--border); }
+.detail-name { font-family: var(--font-display); font-size: 20px; color: var(--charcoal); margin-bottom: 5px; }
+.detail-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+.detail-meta span { font-size: 12px; color: var(--muted); }
+.detail-meta .rating { color: var(--gold); font-weight: 600; }
+.amenity-row-mock { display: flex; gap: 8px; flex-wrap: wrap; }
+.amenity-tag-mock { background: var(--pink-light); border-radius: 20px; padding: 4px 12px; font-size: 11px; color: var(--pink-dark); font-weight: 500; }
+.room-item-mock {
+  margin: 10px 20px;
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+.room-item-mock.selected { border-color: var(--pink); background: var(--pink-light); }
+.rim-name { font-size: 13px; font-weight: 600; color: var(--charcoal); margin-bottom: 2px; }
+.rim-cap { font-size: 11px; color: var(--muted); }
+.rim-price { font-size: 15px; font-weight: 700; color: var(--pink); }
+.rim-price span { font-size: 10px; color: var(--muted); font-weight: 400; }
+.sticky-book {
+  padding: 12px 20px;
+  background: #fff;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sticky-book .price { font-family: var(--font-display); font-size: 20px; color: var(--pink); font-weight: 700; }
+.sticky-book .price span { font-size: 12px; font-weight: 400; color: var(--muted); font-family: var(--font-body); }
+.book-btn-mock { background: var(--pink); color: #fff; border: none; border-radius: 12px; padding: 12px 22px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: var(--font-body); }
+
+/* ── Auth (screen 4) ───────────────────────────────────── */
+.auth-wrap { padding: 28px 24px; }
+.auth-logo { text-align: center; margin-bottom: 24px; }
+.auth-logo-text { font-family: var(--font-display); font-size: 28px; color: var(--pink-dark); }
+.auth-logo-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.auth-tabs-mock { display: flex; border-bottom: 2px solid var(--border); margin-bottom: 20px; }
+.auth-tab-mock { flex: 1; padding: 10px; text-align: center; font-size: 13px; font-weight: 500; color: var(--muted); border-bottom: 2.5px solid transparent; margin-bottom: -2px; cursor: pointer; }
+.auth-tab-mock.active { color: var(--pink); border-bottom-color: var(--pink); }
+.form-field-mock { margin-bottom: 14px; }
+.form-field-mock label { display: block; font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.form-field-mock input { width: 100%; border: 1.5px solid var(--border); border-radius: 10px; padding: 10px 14px; font-size: 13px; font-family: var(--font-body); outline: none; color: var(--ink); }
+.form-field-mock input:focus { border-color: var(--pink); }
+.login-btn-mock { width: 100%; background: var(--pink); color: #fff; border: none; border-radius: 12px; padding: 13px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: var(--font-body); margin-top: 4px; }
+.oauth-sep { text-align: center; font-size: 12px; color: var(--muted); margin: 14px 0; position: relative; }
+.oauth-sep::before, .oauth-sep::after { content: ''; position: absolute; top: 50%; width: 42%; height: 1px; background: var(--border); }
+.oauth-sep::before { left: 0; } .oauth-sep::after { right: 0; }
+.google-btn-mock { width: 100%; background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 11px; font-size: 13px; font-weight: 500; font-family: var(--font-body); cursor: pointer; color: var(--ink); display: flex; align-items: center; justify-content: center; gap: 8px; }
+.register-link { text-align: center; font-size: 12px; color: var(--muted); margin-top: 16px; }
+.register-link a { color: var(--pink); font-weight: 600; cursor: pointer; }
+
+/* ── Cart (screen 5) ───────────────────────────────────── */
+.cart-item-mock {
+  display: flex;
+  gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.cart-img-mock {
+  width: 70px; height: 64px;
+  border-radius: 12px;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+}
+.cart-info { flex: 1; }
+.cart-name { font-size: 13px; font-weight: 600; color: var(--charcoal); margin-bottom: 2px; }
+.cart-meta { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+.cart-row { display: flex; justify-content: space-between; align-items: center; }
+.cart-price { font-size: 14px; font-weight: 700; color: var(--pink); }
+.cart-actions { display: flex; gap: 6px; }
+.cart-btn { border: 1.5px solid var(--border); background: #fff; border-radius: 8px; padding: 5px 10px; font-size: 11px; font-weight: 500; cursor: pointer; font-family: var(--font-body); }
+.cart-btn.primary { background: var(--pink); color: #fff; border-color: var(--pink); }
+.cart-summary-mock { margin: 16px 20px; background: var(--pink-light); border-radius: 14px; padding: 14px 16px; }
+.cs-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; }
+.cs-row .l { color: var(--muted); }
+.cs-total { display: flex; justify-content: space-between; font-size: 16px; font-weight: 700; border-top: 1px dashed var(--pink-mid); padding-top: 10px; margin-top: 4px; }
+.cs-total span:last-child { color: var(--pink); }
+
+/* ── Checkout (screen 6) ───────────────────────────────── */
+.checkout-step-bar { display: flex; align-items: center; padding: 14px 20px; background: var(--cream); border-bottom: 1px solid var(--border); }
+.cs-step { display: flex; align-items: center; gap: 6px; font-size: 11px; }
+.cs-step .snum { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; }
+.cs-step.done .snum { background: var(--success); color: #fff; }
+.cs-step.active .snum { background: var(--pink); color: #fff; }
+.cs-step.inactive .snum { background: var(--border); color: var(--muted); }
+.cs-step.active { color: var(--pink-dark); font-weight: 600; }
+.cs-step.inactive { color: var(--muted); }
+.cs-line { flex: 1; height: 2px; background: var(--border); margin: 0 6px; }
+.cs-line.done { background: var(--pink); }
+.checkout-section { padding: 14px 20px; border-bottom: 1px solid var(--border); }
+.checkout-section h4 { font-size: 13px; font-weight: 600; color: var(--charcoal); margin-bottom: 12px; }
+.booking-summary-card { background: var(--pink-light); border-radius: 14px; padding: 12px 14px; border: 1px solid var(--pink-mid); }
+.bsc-hotel { font-size: 14px; font-weight: 600; color: var(--pink-dark); margin-bottom: 2px; }
+.bsc-meta { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
+.bsc-row { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; }
+.bsc-row .v { font-weight: 600; }
+.pay-method { border: 2px solid var(--pink); border-radius: 12px; padding: 12px 14px; background: var(--white); display: flex; align-items: center; gap: 10px; }
+.pay-icon { font-size: 24px; }
+.pay-name { font-size: 13px; font-weight: 600; }
+.pay-sub { font-size: 11px; color: var(--muted); }
+.pay-check { margin-left: auto; width: 20px; height: 20px; border-radius: 50%; background: var(--pink); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 11px; }
+.co-total { padding: 12px 20px 6px; display: flex; justify-content: space-between; align-items: center; }
+.co-total .label { font-size: 13px; color: var(--muted); }
+.co-total .amount { font-family: var(--font-display); font-size: 22px; color: var(--pink); font-weight: 700; }
+
+/* ── Confirm (screen 7) ────────────────────────────────── */
+.confirm-hero {
+  background: linear-gradient(160deg, var(--pink-dark), var(--pink));
+  padding: 36px 24px 28px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.confirm-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.12), transparent 70%);
+}
+.confirm-check { font-size: 56px; margin-bottom: 10px; position: relative; z-index: 1; }
+.confirm-title { font-family: var(--font-display); font-size: 24px; color: #fff; position: relative; z-index: 1; }
+.confirm-sub { font-size: 13px; color: rgba(255,255,255,0.8); margin-top: 4px; position: relative; z-index: 1; }
+.confirm-code {
+  margin: 0 20px;
+  margin-top: -20px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 18px 20px;
+  box-shadow: 0 8px 32px rgba(153,53,86,0.15);
+  position: relative;
+  z-index: 1;
+}
+.code-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+.code-val { font-family: var(--font-display); font-size: 22px; color: var(--pink); letter-spacing: 3px; text-align: center; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px dashed var(--border); }
+.confirm-info-row { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px; }
+.confirm-info-row .l { color: var(--muted); }
+.confirm-info-row .v { font-weight: 600; color: var(--charcoal); }
+.confirm-btns { padding: 18px 20px 24px; display: flex; flex-direction: column; gap: 10px; }
+.cbtn { width: 100%; padding: 13px; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: var(--font-body); border: none; }
+.cbtn.primary { background: var(--pink); color: #fff; }
+.cbtn.outline { background: transparent; color: var(--pink); border: 2px solid var(--pink); }
+
+/* ── Profile (screen 8) ────────────────────────────────── */
+.profile-header-mock {
+  background: linear-gradient(160deg, var(--pink-dark), var(--pink));
+  padding: 28px 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.profile-av { width: 58px; height: 58px; border-radius: 50%; background: rgba(255,255,255,0.25); border: 2.5px solid rgba(255,255,255,0.5); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 22px; color: #fff; font-weight: 700; flex-shrink: 0; }
+.profile-info .pname { font-size: 17px; font-weight: 700; color: #fff; font-family: var(--font-display); }
+.profile-info .pemail { font-size: 12px; color: rgba(255,255,255,0.75); margin-top: 2px; }
+.profile-info .pmember { font-size: 10px; color: rgba(255,255,255,0.6); margin-top: 3px; }
+.profile-tabs { display: flex; background: #fff; border-bottom: 1px solid var(--border); }
+.ptab { flex: 1; padding: 12px; text-align: center; font-size: 12px; font-weight: 500; color: var(--muted); border-bottom: 2.5px solid transparent; cursor: pointer; }
+.ptab.active { color: var(--pink-dark); border-bottom-color: var(--pink); }
+.booking-hist-item { padding: 12px 20px; border-bottom: 1px solid var(--border); display: flex; gap: 12px; }
+.bhi-img { width: 64px; height: 56px; border-radius: 10px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+.bhi-info { flex: 1; }
+.bhi-name { font-size: 13px; font-weight: 600; color: var(--charcoal); margin-bottom: 2px; }
+.bhi-meta { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+.bhi-row { display: flex; align-items: center; justify-content: space-between; }
+.bhi-price { font-size: 13px; font-weight: 700; color: var(--pink); }
+.status-tag { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 20px; }
+.st-paid { background: #d5f5e3; color: #1e8449; }
+.st-active { background: #d6eaf8; color: #1a5276; }
+.st-cancel { background: #fde8e8; color: #c0392b; }
+
+/* ── Admin (screen 9) ──────────────────────────────────── */
+.admin-shell { display: flex; min-height: 680px; }
+.admin-sb { width: 200px; background: var(--charcoal); padding: 20px 0; flex-shrink: 0; }
+.admin-sb-logo { font-family: var(--font-display); font-size: 16px; color: var(--pink); padding: 0 18px 16px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 10px; }
+.admin-sb-logo span { font-family: var(--font-body); font-size: 9px; display: block; color: rgba(255,255,255,0.4); font-weight: 400; letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+.admin-nav-i { display: flex; align-items: center; gap: 10px; padding: 11px 18px; font-size: 13px; color: rgba(255,255,255,0.55); cursor: pointer; transition: all .15s; border-left: 3px solid transparent; }
+.admin-nav-i:hover { background: rgba(255,255,255,0.06); color: #fff; }
+.admin-nav-i.active { background: rgba(212,83,126,0.18); color: #fff; border-left-color: var(--pink); }
+.admin-nav-i .ni { font-size: 16px; }
+.admin-main { flex: 1; padding: 20px; background: #F0EEF8; overflow: hidden; }
+.admin-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.admin-page-title { font-family: var(--font-display); font-size: 20px; color: var(--charcoal); }
+.admin-top-right { display: flex; align-items: center; gap: 10px; }
+.admin-search-mock { display: flex; align-items: center; gap: 6px; background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 7px 12px; font-size: 12px; color: var(--muted); }
+.admin-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--pink); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; font-weight: 700; }
+.stat-grid-mock { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+.stat-card-mock { background: #fff; border-radius: 12px; padding: 14px 16px; border: 1px solid var(--border); }
+.sc-icon { font-size: 22px; margin-bottom: 8px; }
+.sc-val { font-family: var(--font-display); font-size: 24px; color: var(--charcoal); font-weight: 700; }
+.sc-label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.sc-trend { font-size: 10px; color: var(--success); font-weight: 600; margin-top: 4px; }
+.stat-card-mock.highlight { background: var(--pink); }
+.stat-card-mock.highlight .sc-val, .stat-card-mock.highlight .sc-label, .stat-card-mock.highlight .sc-icon { color: #fff !important; }
+.stat-card-mock.highlight .sc-trend { color: rgba(255,255,255,0.8); }
+.chart-row { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-bottom: 16px; }
+.chart-card { background: #fff; border-radius: 12px; padding: 14px 16px; border: 1px solid var(--border); }
+.chart-card h4 { font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.8px; }
+.bar-chart { display: flex; align-items: flex-end; gap: 6px; height: 80px; }
+.bar { flex: 1; border-radius: 6px 6px 0 0; background: var(--pink-light); position: relative; transition: all .2s; }
+.bar.highlight { background: var(--pink); }
+.bar-label { position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%); font-size: 9px; color: var(--muted); white-space: nowrap; }
+.donut-wrap { display: flex; align-items: center; gap: 12px; }
+.donut { width: 72px; height: 72px; border-radius: 50%; background: conic-gradient(var(--pink) 0% 58%, var(--pink-mid) 58% 80%, #E8F4FD 80% 100%); position: relative; flex-shrink: 0; }
+.donut::after { content: '58%'; position: absolute; inset: 14px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: var(--pink-dark); }
+.donut-legend { display: flex; flex-direction: column; gap: 5px; }
+.dl-item { display: flex; align-items: center; gap: 6px; font-size: 10px; color: var(--muted); }
+.dl-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.admin-table-mock { background: #fff; border-radius: 12px; border: 1px solid var(--border); overflow: hidden; }
+.atm-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.atm-head h4 { font-size: 13px; font-weight: 600; color: var(--charcoal); }
+.atm-head a { font-size: 11px; color: var(--pink); cursor: pointer; font-weight: 500; }
+.atm-row { display: grid; grid-template-columns: 2fr 1.5fr 1fr 1fr 1fr; gap: 8px; padding: 10px 16px; border-bottom: 1px solid var(--border); align-items: center; }
+.atm-row.head { background: #F9F7FD; font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.atm-row.data { font-size: 12px; color: var(--ink); }
+.atm-row.data:hover { background: #FAF8FF; }
+.atm-code { font-family: monospace; font-size: 11px; color: var(--pink-dark); }
+.atm-hotel { font-weight: 500; }
+.atm-amount { font-weight: 700; color: var(--pink); }
+.atm-status { display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 20px; font-size: 10px; font-weight: 700; }
+
+/* ── Responsive fallback ───────────────────────────────── */
+@media (max-width: 860px) {
+  .two-col { flex-direction: column; }
+  .phone-frame { width: 340px; }
+  .ds-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat-grid-mock { grid-template-columns: repeat(2, 1fr); }
+  .chart-row { grid-template-columns: 1fr; }
+  .wide-frame { max-width: 100%; }
+  .admin-shell { flex-direction: column; }
+  .admin-sb { width: 100%; display: flex; flex-wrap: wrap; gap: 0; padding: 8px 0; }
+  .admin-nav-i { padding: 8px 12px; border-left: none; border-bottom: 3px solid transparent; font-size: 11px; }
+  .admin-nav-i.active { border-left: none; border-bottom-color: var(--pink); }
+  .atm-row { grid-template-columns: 1.5fr 1.5fr 1fr; }
+  .atm-row > *:nth-child(4), .atm-row > *:nth-child(5) { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ PAGE HEADER ════════════════════════════════════════ -->
+<header class="page-header">
+  <div class="subtitle-tag">UI/UX Mockup Document</div>
+  <h1>🏨 <span>mytour</span>.vn</h1>
+  <p>Design System &amp; 9 màn hình chính — Framework: Node.js · MySQL · Vanilla JS SPA</p>
+</header>
+
+<!-- ═══ TAB NAVIGATION ═════════════════════════════════════ -->
+<div class="tab-nav">
+  <div class="tab-nav-inner">
+    <button class="tab-btn active" onclick="show('ds')">   <span class="num">0</span> Design System</button>
+    <button class="tab-btn" onclick="show('s1')"><span class="num">1</span> Trang chủ</button>
+    <button class="tab-btn" onclick="show('s2')"><span class="num">2</span> Danh sách KS</button>
+    <button class="tab-btn" onclick="show('s3')"><span class="num">3</span> Chi tiết KS</button>
+    <button class="tab-btn" onclick="show('s4')"><span class="num">4</span> Đăng nhập / Đăng ký</button>
+    <button class="tab-btn" onclick="show('s5')"><span class="num">5</span> Giỏ hàng</button>
+    <button class="tab-btn" onclick="show('s6')"><span class="num">6</span> Thanh toán</button>
+    <button class="tab-btn" onclick="show('s7')"><span class="num">7</span> Xác nhận</button>
+    <button class="tab-btn" onclick="show('s8')"><span class="num">8</span> Hồ sơ KH</button>
+    <button class="tab-btn" onclick="show('s9')"><span class="num">9</span> Admin Dashboard</button>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 0: DESIGN SYSTEM ════════════════════════════ -->
+<section class="screen active" id="ds">
+<div class="screen-wrap">
+  <div class="screen-label">
+    <div><span class="badge">Design System</span><h2>Hệ thống Thiết kế Mytour.vn</h2><p>Bảng màu, Typography, Components &amp; Prototype Flow</p></div>
+  </div>
+
+  <div class="ds-grid">
+    <!-- Colors -->
+    <div class="ds-card">
+      <h3>🎨 Colour Palette</h3>
+      <div class="color-swatch" style="background:#D4537E"><span style="color:#fff">Primary #D4537E</span></div>
+      <div class="color-swatch" style="background:#993556"><span style="color:#fff">Dark #993556</span></div>
+      <div class="color-swatch" style="background:#FBEAF0"><span style="color:#993556">Light #FBEAF0</span></div>
+      <div class="color-swatch" style="background:#C9A84C"><span style="color:#fff">Gold #C9A84C</span></div>
+      <div class="color-swatch" style="background:#1C1C2E"><span style="color:#fff">Charcoal #1C1C2E</span></div>
+      <div class="color-swatch" style="background:#2ECC71"><span style="color:#fff">Success #2ECC71</span></div>
+    </div>
+
+    <!-- Typography -->
+    <div class="ds-card">
+      <h3>🖋 Typography</h3>
+      <div class="type-sample">
+        <div class="label">Display / Logo</div>
+        <div style="font-family:var(--font-display);font-size:26px;color:var(--pink-dark);font-weight:800;letter-spacing:-0.5px">mytour</div>
+      </div>
+      <div class="type-sample">
+        <div class="label">Heading H1 — Playfair Display 700</div>
+        <div style="font-family:var(--font-display);font-size:18px;color:var(--charcoal);font-weight:700">Đặt phòng ngay hôm nay</div>
+      </div>
+      <div class="type-sample">
+        <div class="label">Body — DM Sans 400 · 14px</div>
+        <div style="font-size:14px;color:var(--ink)">Hàng nghìn khách sạn toàn quốc</div>
+      </div>
+      <div class="type-sample">
+        <div class="label">Caption — DM Sans 500 · 11px</div>
+        <div style="font-size:11px;color:var(--muted);font-weight:500">📍 Quận 1, TP.HCM · ⭐ 4.8</div>
+      </div>
+      <div class="type-sample">
+        <div class="label">Price — Playfair Display 700</div>
+        <div style="font-family:var(--font-display);font-size:20px;color:var(--pink);font-weight:700">1.250.000đ<span style="font-family:var(--font-body);font-size:12px;color:var(--muted);font-weight:400">/đêm</span></div>
+      </div>
+    </div>
+
+    <!-- Components -->
+    <div class="ds-card">
+      <h3>🧩 Components</h3>
+      <div class="comp-row">
+        <button class="btn-s primary">Đặt phòng ngay</button>
+        <button class="btn-s outline">Xem chi tiết</button>
+        <button class="btn-s ghost">Yêu thích</button>
+      </div>
+      <div class="comp-row" style="margin-bottom:12px">
+        <span class="chip-s" style="background:var(--pink);color:#fff">Đang chọn</span>
+        <span class="chip-s" style="background:#d5f5e3;color:#1e8449">Đã thanh toán</span>
+        <span class="chip-s" style="background:#fef9e7;color:#d68910">Chờ xác nhận</span>
+        <span class="chip-s" style="background:#fde8e8;color:#c0392b">Đã hủy</span>
+      </div>
+      <div style="border:1.5px solid var(--border);border-radius:10px;padding:10px 12px;font-size:13px;color:#bbb;margin-bottom:10px">🔍 Tìm khách sạn...</div>
+      <div style="border:1.5px solid var(--pink);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--ink)">TP. Hồ Chí Minh</div>
+      <div style="margin-top:10px;display:flex;gap:8px">
+        <div style="flex:1;background:var(--pink-light);border-radius:8px;padding:8px 10px;text-align:center">
+          <div style="font-size:10px;color:var(--muted)">Nhận phòng</div>
+          <div style="font-size:13px;font-weight:600;color:var(--pink-dark)">15/06/2024</div>
+        </div>
+        <div style="flex:1;background:var(--pink-light);border-radius:8px;padding:8px 10px;text-align:center">
+          <div style="font-size:10px;color:var(--muted)">Trả phòng</div>
+          <div style="font-size:13px;font-weight:600;color:var(--pink-dark)">17/06/2024</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Spacing & Icons -->
+    <div class="ds-card">
+      <h3>📐 Spacing & Icons</h3>
+      <div style="display:flex;align-items:flex-end;gap:8px;margin-bottom:14px">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+          <div style="width:16px;background:var(--pink-mid);border-radius:3px;height:4px"></div>
+          <span style="font-size:9px;color:var(--muted)">4px</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+          <div style="width:16px;background:var(--pink-mid);border-radius:3px;height:8px"></div>
+          <span style="font-size:9px;color:var(--muted)">8px</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+          <div style="width:16px;background:var(--pink);border-radius:3px;height:12px"></div>
+          <span style="font-size:9px;color:var(--muted)">12px</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+          <div style="width:16px;background:var(--pink);border-radius:3px;height:16px"></div>
+          <span style="font-size:9px;color:var(--muted)">16px</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+          <div style="width:16px;background:var(--pink-dark);border-radius:3px;height:24px"></div>
+          <span style="font-size:9px;color:var(--muted)">24px</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+          <div style="width:16px;background:var(--pink-dark);border-radius:3px;height:32px"></div>
+          <span style="font-size:9px;color:var(--muted)">32px</span>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:10px;font-weight:600">Border Radius</div>
+      <div style="display:flex;gap:8px;margin-bottom:12px">
+        <div style="width:32px;height:32px;background:var(--pink-light);border-radius:4px;border:1.5px solid var(--pink-mid);display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--muted)">4</div>
+        <div style="width:32px;height:32px;background:var(--pink-light);border-radius:8px;border:1.5px solid var(--pink-mid);display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--muted)">8</div>
+        <div style="width:32px;height:32px;background:var(--pink-light);border-radius:14px;border:1.5px solid var(--pink-mid);display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--muted)">14</div>
+        <div style="width:32px;height:32px;background:var(--pink-light);border-radius:50%;border:1.5px solid var(--pink-mid);display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--muted)">50%</div>
+      </div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px;font-weight:600">Icon Set</div>
+      <div style="display:flex;gap:12px;font-size:22px">
+        <span title="Search">🔍</span><span title="User">👤</span><span title="Cart">🛒</span>
+        <span title="Location">📍</span><span title="Star">⭐</span><span title="Heart">❤️</span>
+        <span title="Hotel">🏨</span><span title="Calendar">📅</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prototype Flow -->
+  <div class="flow-diagram">
+    <h3>🔄 Interactive Prototype — Luồng mua hàng hoàn chỉnh</h3>
+    <div class="flow-row">
+      <div class="flow-node active">
+        <div class="node-circle">🏠</div>
+        <div class="node-label">Màn 1<br>Trang chủ</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node active">
+        <div class="node-circle">🔍</div>
+        <div class="node-label">Màn 2<br>Danh sách</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node active">
+        <div class="node-circle">🏨</div>
+        <div class="node-label">Màn 3<br>Chi tiết</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node active">
+        <div class="node-circle">🔑</div>
+        <div class="node-label">Màn 4<br>Đăng nhập</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="node-circle" style="background:var(--pink-light);border-color:var(--pink-mid)">🛒</div>
+        <div class="node-label">Màn 5<br>Giỏ hàng</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="node-circle" style="background:var(--pink-light);border-color:var(--pink-mid)">💳</div>
+        <div class="node-label">Màn 6<br>Thanh toán</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="node-circle" style="background:var(--pink-light);border-color:var(--pink-mid)">✅</div>
+        <div class="node-label">Màn 7<br>Xác nhận</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="node-circle" style="background:var(--pink-light);border-color:var(--pink-mid)">👤</div>
+        <div class="node-label">Màn 8<br>Hồ sơ</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ SCREEN 1: TRANG CHỦ ════════════════════════════════ -->
+<section class="screen" id="s1">
+<div class="screen-wrap">
+  <div class="screen-label">
+    <div><span class="badge">Màn hình 01</span><h2>Trang chủ (Home)</h2><p>Hero banner, tìm kiếm, khách sạn nổi bật, điều hướng dưới</p></div>
+  </div>
+  <div class="two-col">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-content">
+        <!-- Navbar -->
+        <div class="mock-navbar">
+          <div class="navbar-logo">🏨 mytour</div>
+          <div class="navbar-icons">
+            <span class="icon">🔍</span>
+            <span class="icon">👤</span>
+          </div>
+        </div>
+        <!-- Hero -->
+        <div class="hero-mock">
+          <div class="hero-tagline">✦ Đặt phòng thông minh</div>
+          <div class="hero-title">Tìm khách sạn<br>phù hợp nhất</div>
+          <div class="hero-sub">Hàng nghìn lựa chọn trên toàn Việt Nam</div>
+          <div class="hero-search">
+            <div class="hero-search-row">
+              <span style="font-size:16px">📍</span>
+              <input type="text" placeholder="Điểm đến, tên khách sạn..." value="TP. Hồ Chí Minh" readonly>
+              <button class="search-btn">Tìm</button>
+            </div>
+            <div class="date-row">
+              <div class="date-pill">
+                <span style="font-size:14px">📅</span>
+                <div><span class="dp-label">Nhận phòng</span><span class="dp-val">15/06/2024</span></div>
+              </div>
+              <div class="date-pill">
+                <span style="font-size:14px">📅</span>
+                <div><span class="dp-label">Trả phòng</span><span class="dp-val">17/06/2024</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat"><span class="val">2.400+</span><span class="lbl">Khách sạn</span></div>
+            <div class="hero-stat-sep"></div>
+            <div class="hero-stat"><span class="val">58 tỉnh</span><span class="lbl">Toàn quốc</span></div>
+            <div class="hero-stat-sep"></div>
+            <div class="hero-stat"><span class="val">4.8 ⭐</span><span class="lbl">Đánh giá</span></div>
+          </div>
+        </div>
+        <!-- Categories -->
+        <div class="chips-scroll" style="margin-top:4px">
+          <div class="filter-chip active">Tất cả</div>
+          <div class="filter-chip">TP.HCM 🌆</div>
+          <div class="filter-chip">Đà Nẵng 🏖️</div>
+          <div class="filter-chip">Hà Nội 🏛️</div>
+          <div class="filter-chip">Phú Quốc 🌴</div>
+          <div class="filter-chip">Nha Trang 🌊</div>
+        </div>
+        <!-- Featured Hotels -->
+        <div class="section-head">
+          <h3>🏨 Nổi bật hôm nay</h3>
+          <a>Xem tất cả →</a>
+        </div>
+        <div class="hotel-cards-scroll">
+          <div class="hcard">
+            <div class="hcard-img g1"><span class="hcard-stars">★ 5 sao</span><span class="hcard-fav">🤍</span>🏯</div>
+            <div class="hcard-body">
+              <div class="hcard-name">Vinpearl Luxury Landmark 81</div>
+              <div class="hcard-loc">📍 Bình Thạnh, TP.HCM</div>
+              <div class="hcard-row">
+                <div class="hcard-price">1.250.000đ<br><span>/đêm</span></div>
+                <div class="hcard-rating">⭐ 4.8</div>
+              </div>
+            </div>
+          </div>
+          <div class="hcard">
+            <div class="hcard-img g2"><span class="hcard-stars">★ 5 sao</span><span class="hcard-fav">❤️</span>🏛️</div>
+            <div class="hcard-body">
+              <div class="hcard-name">Rex Hotel Saigon</div>
+              <div class="hcard-loc">📍 Quận 1, TP.HCM</div>
+              <div class="hcard-row">
+                <div class="hcard-price">850.000đ<br><span>/đêm</span></div>
+                <div class="hcard-rating">⭐ 4.5</div>
+              </div>
+            </div>
+          </div>
+          <div class="hcard">
+            <div class="hcard-img g3"><span class="hcard-stars">★ 5 sao</span><span class="hcard-fav">🤍</span>🏙️</div>
+            <div class="hcard-body">
+              <div class="hcard-name">Caravelle Saigon</div>
+              <div class="hcard-loc">📍 Quận 1, TP.HCM</div>
+              <div class="hcard-row">
+                <div class="hcard-price">2.100.000đ<br><span>/đêm</span></div>
+                <div class="hcard-rating">⭐ 4.9</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section-head" style="margin-top:8px">
+          <h3>🌴 Resort &amp; Nghỉ dưỡng</h3>
+          <a>Xem thêm →</a>
+        </div>
+        <div class="hotel-cards-scroll">
+          <div class="hcard">
+            <div class="hcard-img g4"><span class="hcard-stars">★ 5 sao</span><span class="hcard-fav">🤍</span>🌊</div>
+            <div class="hcard-body">
+              <div class="hcard-name">InterContinental Đà Nẵng</div>
+              <div class="hcard-loc">📍 Sơn Trà, Đà Nẵng</div>
+              <div class="hcard-row">
+                <div class="hcard-price">4.500.000đ<br><span>/đêm</span></div>
+                <div class="hcard-rating">⭐ 4.9</div>
+              </div>
+            </div>
+          </div>
+          <div class="hcard">
+            <div class="hcard-img g1"><span class="hcard-stars">★ 5 sao</span><span class="hcard-fav">🤍</span>🏖️</div>
+            <div class="hcard-body">
+              <div class="hcard-name">Fusion Maia Đà Nẵng</div>
+              <div class="hcard-loc">📍 Ngũ Hành Sơn</div>
+              <div class="hcard-row">
+                <div class="hcard-price">5.800.000đ<br><span>/đêm</span></div>
+                <div class="hcard-rating">⭐ 4.8</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="height:10px"></div>
+        <!-- Bottom Nav -->
+        <div class="bottom-nav-mock">
+          <div class="bnav-item active"><div class="bi">🏠</div><div class="bl" style="color:var(--pink)">Trang chủ</div></div>
+          <div class="bnav-item"><div class="bi">🔍</div><div class="bl">Tìm kiếm</div></div>
+          <div class="bnav-item"><div class="bi">🛒</div><div class="bl">Giỏ hàng</div></div>
+          <div class="bnav-item"><div class="bi">👤</div><div class="bl">Tài khoản</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="info-panel">
+      <div class="annotation">
+        <h4>📌 Mục tiêu màn hình</h4>
+        <ul>
+          <li>Thu hút người dùng ngay từ đầu bằng hero banner ấn tượng với gradient màu chủ đạo</li>
+          <li>Form tìm kiếm trung tâm: điểm đến + ngày nhận/trả phòng + số khách</li>
+          <li>Số liệu uy tín (2.400+ KS, 58 tỉnh) tăng độ tin cậy</li>
+          <li>Khách sạn nổi bật theo danh mục dạng horizontal scroll</li>
+          <li>Bottom navigation cố định: Trang chủ / Tìm kiếm / Giỏ hàng / Tài khoản</li>
+        </ul>
+      </div>
+      <div class="annotation">
+        <h4>🎨 Design Decisions</h4>
+        <ul>
+          <li>Font display <span class="tag">Playfair Display</span> cho logo &amp; tiêu đề — cảm giác sang trọng, tin cậy</li>
+          <li>Gradient hero: <span class="tag">#993556 → #D4537E → #E8748A</span> — rực rỡ nhưng không chói</li>
+          <li>Card dạng horizontal scroll giảm scroll dọc, tăng engagement</li>
+          <li>Filter chips cho phép quick-filter theo thành phố không cần form</li>
+        </ul>
+      </div>
+      <div class="annotation">
+        <h4>🔗 Liên kết tới</h4>
+        <ul>
+          <li>Nhấn "Tìm" → <span class="tag">Màn 2</span> Danh sách khách sạn</li>
+          <li>Nhấn Hotel Card → <span class="tag">Màn 3</span> Chi tiết khách sạn</li>
+          <li>Nhấn icon 👤 → <span class="tag">Màn 4</span> Đăng nhập / Đăng ký</li>
+          <li>Nhấn 🛒 → <span class="tag">Màn 5</span> Giỏ hàng</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ SCREEN 2: DANH SÁCH ═════════════════════════════════ -->
+<section class="screen" id="s2">
+<div class="screen-wrap">
+  <div class="screen-label">
+    <div><span class="badge">Màn hình 02</span><h2>Danh sách khách sạn</h2><p>Tìm kiếm nâng cao, filter chips, list view với sort</p></div>
+  </div>
+  <div class="two-col">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-content">
+        <div class="mock-navbar">
+          <span style="color:#fff;font-size:18px;cursor:pointer">←</span>
+          <div class="navbar-search-mock" style="flex:1;margin:0 10px">
+            <span style="font-size:14px">📍</span>
+            <span>TP. Hồ Chí Minh</span>
+          </div>
+          <span style="color:rgba(255,255,255,0.85);font-size:16px">⚙️</span>
+        </div>
+        <!-- Date row -->
+        <div style="display:flex;gap:8px;padding:10px 16px;background:#fff;border-bottom:1px solid var(--border)">
+          <div style="flex:1;background:var(--pink-light);border-radius:8px;padding:6px 10px;font-size:11px">
+            <div style="color:var(--muted);font-size:10px">Nhận phòng</div>
+            <div style="font-weight:600;color:var(--pink-dark)">15/06</div>
+          </div>
+          <div style="flex:1;background:var(--pink-light);border-radius:8px;padding:6px 10px;font-size:11px">
+            <div style="color:var(--muted);font-size:10px">Trả phòng</div>
+            <div style="font-weight:600;color:var(--pink-dark)">17/06</div>
+          </div>
+          <div style="flex:1;background:var(--pink-light);border-radius:8px;padding:6px 10px;font-size:11px">
+            <div style="color:var(--muted);font-size:10px">Khách</div>
+            <div style="font-weight:600;color:var(--pink-dark)">2 người</div>
+          </div>
+        </div>
+        <!-- Filters -->
+        <div class="chips-scroll" style="padding-top:10px;padding-bottom:10px">
+          <div class="filter-chip active">Tất cả</div>
+          <div class="filter-chip">Dưới 500k</div>
+          <div class="filter-chip">500k–1tr</div>
+          <div class="filter-chip">Trên 1tr</div>
+          <div class="filter-chip">5 sao ⭐⭐⭐⭐⭐</div>
+          <div class="filter-chip">Có hồ bơi 🏊</div>
+        </div>
+        <!-- Sort bar -->
+        <div class="sort-bar">
+          <span>24 kết quả</span>
+          <select><option>Đánh giá cao nhất</option><option>Giá thấp nhất</option><option>Giá cao nhất</option></select>
+        </div>
+        <!-- List -->
+        <div class="hlist-item">
+          <div class="hlist-img g1" style="background:linear-gradient(135deg,#fce4ec,#f8bbd9)">🏯</div>
+          <div class="hlist-info">
+            <div class="hlist-name">Vinpearl Luxury Landmark 81</div>
+            <div class="hlist-loc">📍 Bình Thạnh · WiFi · Hồ bơi · Gym</div>
+            <div class="hlist-row">
+              <div class="hlist-price">1.250.000đ<span>/đêm</span></div>
+              <div class="hlist-rating">⭐ <strong>4.8</strong> (312)</div>
+            </div>
+          </div>
+        </div>
+        <div class="hlist-item">
+          <div class="hlist-img" style="background:linear-gradient(135deg,#e8eaf6,#c5cae9)">🏛️</div>
+          <div class="hlist-info">
+            <div class="hlist-name">Rex Hotel Saigon</div>
+            <div class="hlist-loc">📍 Quận 1 · Bữa sáng · WiFi · Gym</div>
+            <div class="hlist-row">
+              <div class="hlist-price">850.000đ<span>/đêm</span></div>
+              <div class="hlist-rating">⭐ <strong>4.5</strong> (289)</div>
+            </div>
+          </div>
+        </div>
+        <div class="hlist-item" style="background:var(--pink-light);border-left:3px solid var(--pink)">
+          <div class="hlist-img" style="background:linear-gradient(135deg,#e0f7fa,#b2ebf2)">🏙️</div>
+          <div class="hlist-info">
+            <div class="hlist-name">Caravelle Saigon</div>
+            <div class="hlist-loc">📍 Quận 1 · Hồ bơi · Bar tầng thượng</div>
+            <div class="hlist-row">
+              <div class="hlist-price">2.100.000đ<span>/đêm</span></div>
+              <div class="hlist-rating">⭐ <strong>4.9</strong> (421)</div>
+            </div>
+          </div>
+        </div>
+        <div class="hlist-item">
+          <div class="hlist-img" style="background:linear-gradient(135deg,#f9fbe7,#dcedc8)">🏢</div>
+          <div class="hlist-info">
+            <div class="hlist-name">Novotel Saigon Centre</div>
+            <div class="hlist-loc">📍 Quận 3 · Phòng họp · WiFi</div>
+            <div class="hlist-row">
+              <div class="hlist-price">920.000đ<span>/đêm</span></div>
+              <div class="hlist-rating">⭐ <strong>4.3</strong> (177)</div>
+            </div>
+          </div>
+        </div>
+        <div class="hlist-item">
+          <div class="hlist-img" style="background:linear-gradient(135deg,#fce4ec,#f8bbd9)">🌆</div>
+          <div class="hlist-info">
+            <div class="hlist-name">New World Saigon Hotel</div>
+            <div class="hlist-loc">📍 Quận 1 · Hồ bơi · Spa · Nhà hàng</div>
+            <div class="hlist-row">
+              <div class="hlist-price">1.650.000đ<span>/đêm</span></div>
+              <div class="hlist-rating">⭐ <strong>4.6</strong> (203)</div>
+            </div>
+          </div>
+        </div>
+        <div style="height:8px"></div>
+        <div class="bottom-nav-mock">
+          <div class="bnav-item"><div class="bi">🏠</div><div class="bl">Trang chủ</div></div>
+          <div class="bnav-item active"><div class="bi">🔍</div><div class="bl" style="color:var(--pink)">Tìm kiếm</div></div>
+          <div class="bnav-item"><div class="bi">🛒</div><div class="bl">Giỏ hàng</div></div>
+          <div class="bnav-item"><div class="bi">👤</div><div class="bl">Tài khoản</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="info-panel">
+      <div class="annotation">
+        <h4>📌 Chức năng chính</h4>
+        <ul>
+          <li>Sticky navbar có inline search + back button</li>
+          <li>Date picker row: nhận/trả phòng + số khách dạng pill</li>
+          <li>Filter chips: lọc theo giá, sao, tiện nghi — multi-select</li>
+          <li>Sort dropdown: theo đánh giá, giá tăng/giảm</li>
+          <li>Highlight item: row có border trái màu pink cho KS đang hover</li>
+        </ul>
+      </div>
+      <div class="annotation">
+        <h4>🔧 Functional Requirements</h4>
+        <ul>
+          <li>API <span class="tag">GET /api/hotels</span> hỗ trợ params: city, minPrice, maxPrice, stars, q, page, limit</li>
+          <li>Infinite scroll hoặc pagination khi có 20+ kết quả</li>
+          <li>Debounce search input 300ms</li>
+          <li>Filter state lưu vào URL params để có thể share/bookmark</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ SCREEN 3: CHI TIẾT KS ══════════════════════════════ -->
+<section class="screen" id="s3">
+<div class="screen-wrap">
+  <div class="screen-label">
+    <div><span class="badge">Màn hình 03</span><h2>Chi tiết khách sạn</h2><p>Gallery ảnh, thông tin phòng, đánh giá, booking sidebar</p></div>
+  </div>
+  <div class="two-col">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-content">
+        <div class="mock-navbar">
+          <span style="color:#fff;font-size:18px">←</span>
+          <span class="navbar-logo" style="font-size:14px;margin-left:8px">Chi tiết</span>
+          <div class="navbar-icons"><span class="icon">❤️</span><span class="icon">⤴️</span></div>
+        </div>
+        <!-- Gallery -->
+        <div class="detail-gallery">
+          <div class="gal-main">🏯</div>
+          <div class="gal-side">
+            <div>🛏️</div>
+            <div>🛁</div>
+          </div>
+        </div>
+        <!-- Info -->
+        <div class="detail-section">
+          <div class="detail-name">Vinpearl Luxury Landmark 81</div>
+          <div class="detail-meta">
+            <span>📍 Bình Thạnh, TP.HCM</span>
+            <span class="rating">⭐ 4.8</span>
+            <span style="color:var(--muted)">(312 đánh giá)</span>
+          </div>
+          <div class="amenity-row-mock">
+            <span class="amenity-tag-mock">🏊 Hồ bơi</span>
+            <span class="amenity-tag-mock">💪 Gym</span>
+            <span class="amenity-tag-mock">📶 WiFi</span>
+            <span class="amenity-tag-mock">🍳 Bữa sáng</span>
+            <span class="amenity-tag-mock">🅿️ Bãi xe</span>
+          </div>
+        </div>
+        <!-- Rooms -->
+        <div style="padding:12px 20px 6px">
+          <div style="font-size:14px;font-weight:600;color:var(--charcoal)">Chọn loại phòng</div>
+        </div>
+        <div class="room-item-mock selected">
+          <div>
+            <div class="rim-name">🛏️ Phòng Deluxe</div>
+            <div class="rim-cap">👥 2 người · View sông Sài Gòn</div>
+          </div>
+          <div style="text-align:right">
+            <div class="rim-price">1.250.000đ<span>/đêm</span></div>
+            <div style="background:var(--pink);color:#fff;font-size:10px;font-weight:600;padding:3px 8px;border-radius:20px;margin-top:4px;display:inline-block">Đã chọn ✓</div>
+          </div>
+        </div>
+        <div class="room-item-mock">
+          <div>
+            <div class="rim-name">🏰 Suite Premier</div>
+            <div class="rim-cap">👥 3 người · Butler service</div>
+          </div>
+          <div style="text-align:right">
+            <div class="rim-price">3.500.000đ<span>/đêm</span></div>
+          </div>
+        </div>
+        <!-- Reviews -->
+        <div style="padding:12px 20px 8px;border-top:1px solid var(--border);margin-top:8px">
+          <div style="font-size:14px;font-weight:600;color:var(--charcoal);margin-bottom:10px">Đánh giá khách hàng</div>
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px">
+            <div style="text-align:center">
+              <div style="font-family:var(--font-display);font-size:36px;color:var(--pink);font-weight:700;line-height:1">4.8</div>
+              <div style="color:var(--gold);font-size:14px">★★★★★</div>
+              <div style="font-size:10px;color:var(--muted)">312 đánh giá</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:4px">
+              <div style="display:flex;align-items:center;gap:6px"><span style="font-size:10px;color:var(--muted);width:12px">5</span><div style="flex:1;height:5px;border-radius:3px;background:#eee;overflow:hidden"><div style="width:72%;height:100%;background:var(--pink)"></div></div></div>
+              <div style="display:flex;align-items:center;gap:6px"><span style="font-size:10px;color:var(--muted);width:12px">4</span><div style="flex:1;height:5px;border-radius:3px;background:#eee;overflow:hidden"><div style="width:18%;height:100%;background:var(--pink-mid)"></div></div></div>
+              <div style="display:flex;align-items:center;gap:6px"><span style="font-size:10px;color:var(--muted);width:12px">3</span><div style="flex:1;height:5px;border-radius:3px;background:#eee;overflow:hidden"><div style="width:7%;height:100%;background:#ddd"></div></div></div>
+            </div>
+          </div>
+          <div style="background:var(--cream);border-radius:10px;padding:10px 12px;font-size:12px;color:var(--ink)">
+            <div style="font-weight:600;margin-bottom:3px">Nguyễn Thảo ⭐⭐⭐⭐⭐</div>
+            <div style="color:var(--muted)">Phòng rất đẹp, view tuyệt vời, nhân viên thân thiện. Sẽ quay lại lần sau!</div>
+          </div>
+        </div>
+        <div style="height:70px"></div>
+        <!-- Sticky book -->
+        <div class="sticky-book" style="position:sticky;bottom:0">
+          <div>
+            <div class="price">1.250.000đ<span>/đêm</span></div>
+            <div style="font-size:10px;color:var(--muted)">Phòng Deluxe · 2 đêm = 2.500.000đ</div>
+          </div>
+          <button class="book-btn-mock">Đặt ngay →</button>
+        </div>
+      </div>
+    </div>
+    <div class="info-panel">
+      <div class="annotation">
+        <h4>📌 Thành phần</h4>
+        <ul>
+          <li>Gallery grid 2 cột: ảnh chính lớn + 2 ảnh phụ bên phải</li>
+          <li>Thông tin cơ bản: tên, địa chỉ, rating tổng hợp, số đánh giá</li>
+          <li>Amenity tags: hiển thị tiện nghi bằng chip có icon</li>
+          <li>Room picker: chọn loại phòng — selected state với border + badge xanh</li>
+          <li>Rating breakdown: điểm tổng + bar chart phân bổ sao</li>
+          <li>Sticky bottom bar: giá + nút đặt phòng luôn visible</li>
+        </ul>
+      </div>
+      <div class="annotation">
+        <h4>🔗 Liên kết</h4>
+        <ul>
+          <li>Nhấn "Đặt ngay" (chưa đăng nhập) → <span class="tag">Màn 4</span> Đăng nhập</li>
+          <li>Nhấn "Đặt ngay" (đã đăng nhập) → <span class="tag">Màn 6</span> Thanh toán</li>
+          <li>Nhấn 🛒 "Thêm giỏ hàng" → <span class="tag">Màn 5</span> Giỏ hàng</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ SCREEN 4: ĐĂNG NHẬP ════════════════════════════════ -->
+<section class="screen" id="s4">
+<div class="screen-wrap">
+  <div class="screen-label">
+    <div><span class="badge">Màn hình 04</span><h2>Đăng nhập / Đăng ký</h2><p>JWT auth + OAuth Google, form validation</p></div>
+  </div>
+  <div class="two-col">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-content">
+        <div class="mock-navbar"><div class="navbar-logo">🏨 mytour</div></div>
+        <div class="auth-wrap">
+          <div class="auth-logo">
+            <div class="auth-logo-text">🏨 mytour.vn</div>
+            <div class="auth-logo-sub">Đặt phòng thông minh — Trải nghiệm đỉnh cao</div>
+          </div>
+          <div class="auth-tabs-mock">
+            <div class="auth-tab-mock active">Đăng nhập</div>
+            <div class="auth-tab-mock">Đăng ký</div>
+          </div>
+          <div class="form-field-mock">
+            <label>Email</label>
+            <input type="email" placeholder="email@example.com" value="thao.nguyen@gmail.com" readonly>
+          </div>
+          <div class="form-field-mock">
+            <label>Mật khẩu</label>
+            <input type="password" value="••••••••" readonly>
+          </div>
+          <div style="text-align:right;margin-bottom:14px">
+            <a style="font-size:12px;color:var(--pink);cursor:pointer">Quên mật khẩu?</a>
+          </div>
+          <button class="login-btn-mock">Đăng nhập</button>
+          <div class="oauth-sep">hoặc tiếp tục với</div>
+          <button class="google-btn-mock">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+            Tiếp tục với Google
+          </button>
+          <div class="register-link">Chưa có tài khoản? <a>Đăng ký ngay</a></div>
+          <div style="margin-top:20px;padding:14px;background:var(--pink-light);border-radius:12px;border:1px solid var(--pink-mid)">
+            <div style="font-size:11px;font-weight:600;color:var(--pink-dark);margin-bottom:8px">✨ Đặc quyền thành viên</div>
+            <div style="font-size:11px;color:var(--ink);line-height:1.6">🎁 Giảm thêm 5% cho đơn đầu<br>📧 Nhận deal độc quyền qua email<br>⭐ Tích điểm đổi thưởng</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="info-panel">
+      <div class="annotation">
+        <h4>📌 Chức năng</h4>
+        <ul>
+          <li>Tab switch: Đăng nhập ↔ Đăng ký không reload trang</li>
+          <li>Email + Password validation real-time trước khi submit</li>
+          <li>OAuth Google: redirect flow, nhận code từ callback</li>
+          <li>JWT token lưu trong httpOnly cookie (bảo mật khỏi XSS)</li>
+          <li>Quên mật khẩu: gửi email reset link</li>
+          <li>Upsell: hiển thị lợi ích thành viên để thúc đẩy đăng ký</li>
+        </ul>
+      </div>
+      <div class="annotation">
+        <h4>🔒 Security</h4>
+        <ul>
+          <li>Rate limit: <span class="tag">20 req / 15 phút</span> trên route /auth</li>
+          <li>Password: bcrypt hash, salt rounds = 10</li>
+          <li>JWT expires: <span class="tag">7 ngày</span>, refresh khi còn 1 ngày</li>
+          <li>CSRF protection qua SameSite=Lax cookie</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ SCREEN 5: GIỎ HÀNG ═════════════════════════════════ -->
+<section class="screen" id="s5">
+<div class="screen-wrap">
+  <div class="screen-label">
+    <div><span class="badge">Màn hình 05</span><h2>Giỏ hàng</h2><p>Danh sách phòng chưa thanh toán, tổng tiền, CTA</p></div>
+  </div>
+  <div class="two-col">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-content">
+        <div class="mock-navbar">
+          <span style="color:#fff;font-size:18px">←</span>
+          <span class="navbar-logo" style="font-size:15px;margin-left:8px">Giỏ hàng</span>
+          <div class="navbar-icons"><span style="color:#fff;font-size:13px;background:rgba(255,255,255,0.2);padding:3px 8px;border-radius:12px">2 phòng</span></div>
+        </div>
+        <div style="padding:12px 20px;font-size:13px;color:var(--muted)">Các phòng đã lưu — chưa thanh toán</div>
+        <!-- Cart items -->
+        <div class="cart-item-mock">
+          <div class="cart-img-mock" style="background:linear-gradient(135deg,#fce4ec,#f8bbd9)">🏯</div>
+          <div class="cart-info">
+            <div class="cart-name">Vinpearl Luxury Landmark 81</div>
+            <div class="cart-meta">🛏️ Deluxe · 📅 15/06 → 17/06 · 2 đêm · 2 khách</div>
+            <div class="cart-row">
+              <div class="cart-price">2.500.000đ</div>
+              <div class="cart-actions">
+                <button class="cart-btn primary">Thanh toán</button>
+                <button class="cart-btn">🗑️</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="cart-item-mock">
+          <div class="cart-img-mock" style="background:linear-gradient(135deg,#e0f7fa,#b2ebf2)">🌊</div>
+          <div class="cart-info">
+            <div class="cart-name">InterContinental Đà Nẵng</div>
+            <div class="cart-meta">🛏️ Ocean View · 📅 20/07 → 22/07 · 2 đêm</div>
+            <div class="cart-row">
+              <div class="cart-price">4.200.000đ</div>
+              <div class="cart-actions">
+                <button class="cart-btn primary">Thanh toán</button>
+                <button class="cart-btn">🗑️</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Summary -->
+        <div class="cart-summary-mock">
+          <div class="cs-row"><span class="l">Vinpearl (2 đêm)</span><span>2.500.000đ</span></div>
+          <div class="cs-row"><span class="l">InterContinental (2 đêm)</span><span>4.200.000đ</span></div>
+          <div class="cs-row"><span class="l">Phí dịch vụ (5%)</span><span>335.000đ</span></div>
+          <div class="cs-total"><span>Tổng cộng</span><span>7.035.000đ</span></div>
+        </div>
+        <div style="padding:0 20px 20px">
+          <button style="width:100%;background:var(--pink);color:#fff;border:none;border-radius:14px;padding:14px;font-size:14px;font-weight:700;font-family:var(--font-body);cursor:pointer">Thanh toán tất cả (2 phòng) →</button>
+          <div style="text-align:center;margin-top:10px;font-size:12px;color:var(--muted)">🔒 Thanh toán an toàn · Huỷ miễn phí trước 24h</div>
+        </div>
+        <div style="height:10px"></div>
+        <div class="bottom-nav-mock">
+          <div class="bnav-item"><div class="bi">🏠</div><div class="bl">Trang chủ</div></div>
+          <div class="bnav-item"><div class="bi">🔍</div><div class="bl">Tìm kiếm</div></div>
+          <div class="bnav-item active"><div class="bi">🛒</div><div class="bl" style="color:var(--pink)">Giỏ hàng</div></div>
+          <div class="bnav-item"><div class="bi">👤</div><div class="bl">Tài khoản</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="info-panel">
+      <div class="annotation">
+        <h4>📌 Chức năng</h4>
+        <ul>
+          <li>Hiển thị danh sách phòng đã "Save" từ màn chi tiết</li>
+          <li>Mỗi item: ảnh, tên KS, loại phòng, ngày nhận/trả, số đêm</li>
+          <li>Nút "Thanh toán" từng phòng riêng lẻ hoặc tất cả cùng lúc</li>
+          <li>Nút xóa 🗑️ — xác nhận trước khi xóa</li>
+          <li>Summary box: liệt kê từng mục + phí dịch vụ + tổng</li>
+          <li>Badge số lượng trên icon 🛒 ở navbar</li>
+        </ul>
+      </div>
+      <div class="annotation">
+        <h4>💾 Data</h4>
+        <ul>
+          <li>API <span class="tag">GET /api/cart</span> — lấy cart theo user_id</li>
+          <li>API <span class="tag">DELETE /api/cart/:id</span> — xóa item</li>
+          <li>Cart persist qua database, không mất khi đóng app</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ SCREEN 6: THANH TOÁN ═══════════════════════════════ -->
+<section class="screen" id="s6">
+<div class="screen-wrap">
+  <div class="screen-label">
+    <div><span class="badge">Màn hình 06</span><h2>Thanh toán (Checkout)</h2><p>Stepper, thông tin khách, phương thức thanh toán, tóm tắt</p></div>
+  </div>
+  <div class="two-col">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-content">
+        <div class="mock-navbar">
+          <span style="color:#fff;font-size:18px">←</span>
+          <span class="navbar-logo" style="font-size:14px;margin-left:8px">Thanh toán</span>
+        </div>
+        <!-- Stepper -->
+        <div class="checkout-step-bar">
+          <div class="cs-step done"><div class="snum">✓</div>Thông tin</div>
+          <div class="cs-line done"></div>
+          <div class="cs-step active"><div class="snum">2</div>Thanh toán</div>
+          <div class="cs-line"></div>
+          <div class="cs-step inactive"><div class="snum">3</div>Xác nhận</div>
+        </div>
+        <!-- Booking summary -->
+        <div class="checkout-section">
+          <h4>📋 Tóm tắt đặt phòng</h4>
+          <div class="booking-summary-card">
+            <div class="bsc-hotel">Vinpearl Luxury Landmark 81</div>
+            <div class="bsc-meta">📍 Bình Thạnh, TP.HCM · ⭐ 4.8</div>
+            <div class="bsc-row"><span>Phòng Deluxe</span><span class="v">2 đêm · 2 khách</span></div>
+            <div class="bsc-row"><span>📅 Nhận phòng</span><span class="v">15/06/2024 · 14:00</span></div>
+            <div class="bsc-row"><span>📅 Trả phòng</span><span class="v">17/06/2024 · 12:00</span></div>
+          </div>
+        </div>
+        <!-- Guest info -->
+        <div class="checkout-section">
+          <h4>👤 Thông tin khách</h4>
+          <div style="display:grid;gap:8px">
+            <div style="border:1.5px solid var(--border);border-radius:10px;padding:9px 12px;font-size:13px;color:var(--ink);background:var(--cream)">Nguyễn Thảo</div>
+            <div style="border:1.5px solid var(--border);border-radius:10px;padding:9px 12px;font-size:13px;color:var(--ink);background:var(--cream)">thao@gmail.com</div>
+            <div style="border:1.5px solid var(--border);border-radius:10px;padding:9px 12px;font-size:13px;color:var(--ink);background:var(--cream)">0901 234 567</div>
+            <div style="border:1.5px solid var(--border);border-radius:10px;padding:9px 12px;font-size:13px;color:var(--muted);background:#fff">Ghi chú đặc biệt (tuỳ chọn)...</div>
+          </div>
+        </div>
+        <!-- Payment method -->
+        <div class="checkout-section">
+          <h4>💳 Phương thức thanh toán</h4>
+          <div class="pay-method">
+            <div class="pay-icon">🏦</div>
+            <div>
+              <div class="pay-name">Chuyển khoản ngân hàng</div>
+              <div class="pay-sub">Vietcombank · STK: 1234 5678 90</div>
+            </div>
+            <div class="pay-check">✓</div>
+          </div>
+          <div style="margin-top:8px;border:1.5px solid var(--border);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px;opacity:0.6">
+            <div class="pay-icon">📱</div>
+            <div><div class="pay-name">Ví MoMo</div><div class="pay-sub">Thanh toán qua ứng dụng</div></div>
+          </div>
+        </div>
+        <!-- Total -->
+        <div class="co-total">
+          <div>
+            <div class="label">Tổng thanh toán</div>
+            <div style="font-size:11px;color:var(--muted)">Đã bao gồm phí dịch vụ 5%</div>
+          </div>
+          <div class="amount">2.625.000đ</div>
+        </div>
+        <div style="padding:0 20px 24px">
+          <button style="width:100%;background:var(--pink);color:#fff;border:none;border-radius:14px;padding:14px;font-size:14px;font-weight:700;font-family:var(--font-body);cursor:pointer">✅ Xác nhận & Thanh toán</button>
+          <div style="text-align:center;margin-top:8px;font-size:11px;color:var(--muted)">🔒 Thông tin được mã hóa SSL 256-bit</div>
+        </div>
+      </div>
+    </div>
+    <div class="info-panel">
+      <div class="annotation">
+        <h4>📌 Stepper Flow</h4>
+        <ul>
+          <li>Step 1 (done): Thông tin cá nhân — auto-fill từ profile</li>
+          <li>Step 2 (active): Thanh toán — chọn phương thức</li>
+          <li>Step 3 (pending): Xác nhận — hiển thị sau khi thanh toán</li>
+          <li>Stepper visual: ✓ (xanh) → màu pink (active) → xám (inactive)</li>
+        </ul>
+      </div>
+      <div class="annotation">
+        <h4>💳 Thanh toán Mock</h4>
+        <ul>
+          <li>Hiện tại là <span class="tag">Mock payment</span> — nhấn "Xác nhận" để hoàn tất</li>
+          <li>Có thể tích hợp thực: <span class="tag">VNPay</span>, <span class="tag">MoMo</span>, <span class="tag">ZaloPay</span></li>
+          <li>Sau thanh toán: API <span class="tag">POST /api/bookings/:id/pay</span> cập nhật is_paid=1</li>
+          <li>Tự động redirect sang <span class="tag">Màn 7</span> xác nhận</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ SCREEN 7: XÁC NHẬN ════════════════════════════════ -->
+<section class="screen" id="s7">
+<div class="screen-wrap">
+  <div class="screen-label">
+    <div><span class="badge">Màn hình 07</span><h2>Xác nhận đặt phòng</h2><p>Success state, mã booking, receipt, CTA tiếp theo</p></div>
+  </div>
+  <div class="two-col">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-content">
+        <div class="mock-navbar"><div class="navbar-logo">🏨 mytour</div></div>
+        <!-- Success hero -->
+        <div class="confirm-hero">
+          <div class="confirm-check">🎉</div>
+          <div class="confirm-title">Đặt phòng thành công!</div>
+          <div class="confirm-sub">Cảm ơn bạn đã tin tưởng mytour.vn</div>
+        </div>
+        <!-- Receipt -->
+        <div class="confirm-code">
+          <div class="code-label">Mã đặt phòng của bạn</div>
+          <div class="code-val">MT-2024-0XA7</div>
+          <div class="confirm-info-row"><span class="l">Khách sạn</span><span class="v">Vinpearl Luxury Landmark 81</span></div>
+          <div class="confirm-info-row"><span class="l">Loại phòng</span><span class="v">Phòng Deluxe · 2 đêm</span></div>
+          <div class="confirm-info-row"><span class="l">Nhận phòng</span><span class="v">15/06/2024 · 14:00</span></div>
+          <div class="confirm-info-row"><span class="l">Trả phòng</span><span class="v">17/06/2024 · 12:00</span></div>
+          <div class="confirm-info-row"><span class="l">Số khách</span><span class="v">2 người</span></div>
+          <div class="confirm-info-row"><span class="l">Thanh toán</span><span class="v" style="color:var(--success)">✅ Đã thanh toán</span></div>
+          <div style="display:flex;justify-content:space-between;padding-top:12px;border-top:1.5px dashed var(--border);margin-top:8px">
+            <span style="font-size:14px;font-weight:700;color:var(--charcoal)">Tổng cộng</span>
+            <span style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--pink)">2.625.000đ</span>
+          </div>
+        </div>
+        <!-- Info box -->
+        <div style="margin:14px 20px;background:var(--cream);border-radius:12px;padding:12px 14px;border:1px solid var(--border)">
+          <div style="font-size:12px;font-weight:600;color:var(--charcoal);margin-bottom:6px">📧 Xác nhận đã gửi về email</div>
+          <div style="font-size:12px;color:var(--muted)">thao.nguyen@gmail.com</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:4px">Hỗ trợ 24/7: <strong style="color:var(--pink)">1900 1234</strong></div>
+        </div>
+        <!-- Buttons -->
+        <div class="confirm-btns">
+          <button class="cbtn primary">🏠 Về trang chủ</button>
+          <button class="cbtn outline">📋 Xem lịch sử đặt phòng</button>
+          <button class="cbtn" style="background:var(--cream);border:1px solid var(--border);color:var(--ink)">⭐ Đánh giá khách sạn</button>
+        </div>
+      </div>
+    </div>
+    <div class="info-panel">
+      <div class="annotation">
+        <h4>📌 Thành phần</h4>
+        <ul>
+          <li>Success hero với gradient &amp; confetti icon — cảm giác thành công rõ ràng</li>
+          <li>Booking receipt: mã code nổi bật, thông tin đầy đủ dạng key-value</li>
+          <li>Tổng tiền cuối với typography Playfair Display màu primary</li>
+          <li>Email confirmation notice — tạo tin tưởng</li>
+          <li>3 CTA: về nhà / lịch sử / đánh giá — dẫn dắt user action tiếp theo</li>
+        </ul>
+      </div>
+      <div class="annotation">
+        <h4>🔗 Sau màn này</h4>
+        <ul>
+          <li>"Xem lịch sử" → <span class="tag">Màn 8</span> Hồ sơ khách hàng</li>
+          <li>"Đánh giá" → Review modal trên <span class="tag">Màn 3</span> Chi tiết</li>
+          <li>"Về trang chủ" → <span class="tag">Màn 1</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ SCREEN 8: HỒ SƠ KHÁCH HÀNG ════════════════════════ -->
+<section class="screen" id="s8">
+<div class="screen-wrap">
+  <div class="screen-label">
+    <div><span class="badge">Màn hình 08</span><h2>Hồ sơ Khách hàng (Dashboard)</h2><p>Profile header, lịch sử đặt phòng, đổi mật khẩu</p></div>
+  </div>
+  <div class="two-col">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-content">
+        <!-- Profile header -->
+        <div class="profile-header-mock">
+          <div class="profile-av">NT</div>
+          <div class="profile-info">
+            <div class="pname">Nguyễn Thảo</div>
+            <div class="pemail">thao.nguyen@gmail.com</div>
+            <div class="pmember">✨ Thành viên từ 01/2024</div>
+          </div>
+          <div style="margin-left:auto;background:rgba(255,255,255,0.2);border-radius:8px;padding:6px 10px;font-size:11px;color:#fff">✏️ Sửa</div>
+        </div>
+        <!-- Stats strip -->
+        <div style="display:flex;background:#fff;border-bottom:1px solid var(--border)">
+          <div style="flex:1;padding:12px;text-align:center;border-right:1px solid var(--border)">
+            <div style="font-family:var(--font-display);font-size:20px;color:var(--pink);font-weight:700">7</div>
+            <div style="font-size:10px;color:var(--muted)">Đặt phòng</div>
+          </div>
+          <div style="flex:1;padding:12px;text-align:center;border-right:1px solid var(--border)">
+            <div style="font-family:var(--font-display);font-size:20px;color:var(--pink);font-weight:700">4.8</div>
+            <div style="font-size:10px;color:var(--muted)">Rating TB</div>
+          </div>
+          <div style="flex:1;padding:12px;text-align:center">
+            <div style="font-family:var(--font-display);font-size:20px;color:var(--pink);font-weight:700">12.5tr</div>
+            <div style="font-size:10px;color:var(--muted)">Tổng chi tiêu</div>
+          </div>
+        </div>
+        <!-- Tabs -->
+        <div class="profile-tabs">
+          <div class="ptab active">📋 Lịch sử</div>
+          <div class="ptab">🔑 Mật khẩu</div>
+          <div class="ptab">❤️ Yêu thích</div>
+        </div>
+        <!-- Booking history -->
+        <div style="padding:10px 20px 6px;font-size:13px;font-weight:600;color:var(--charcoal)">Đặt phòng gần đây</div>
+        <div class="booking-hist-item">
+          <div class="bhi-img" style="background:linear-gradient(135deg,#fce4ec,#f8bbd9)">🏯</div>
+          <div class="bhi-info">
+            <div class="bhi-name">Vinpearl Luxury Landmark 81</div>
+            <div class="bhi-meta">📅 15/06 – 17/06/2024 · Phòng Deluxe</div>
+            <div class="bhi-row">
+              <span class="bhi-price">2.625.000đ</span>
+              <div style="display:flex;align-items:center;gap:6px">
+                <span class="status-tag st-paid">✅ Đã thanh toán</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="booking-hist-item">
+          <div class="bhi-img" style="background:linear-gradient(135deg,#e8eaf6,#c5cae9)">🏛️</div>
+          <div class="bhi-info">
+            <div class="bhi-name">Rex Hotel Saigon</div>
+            <div class="bhi-meta">📅 10/05 – 12/05/2024 · Superior</div>
+            <div class="bhi-row">
+              <span class="bhi-price">1.700.000đ</span>
+              <div style="display:flex;align-items:center;gap:6px">
+                <span class="status-tag st-active">🏠 Đang ở</span>
+                <button style="font-size:10px;border:1px solid var(--pink);color:var(--pink);background:#fff;padding:3px 7px;border-radius:6px;cursor:pointer;font-family:var(--font-body)">⭐ Đánh giá</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="booking-hist-item">
+          <div class="bhi-img" style="background:linear-gradient(135deg,#fde8e8,#ffc5c5)">🌊</div>
+          <div class="bhi-info">
+            <div class="bhi-name">InterContinental Đà Nẵng</div>
+            <div class="bhi-meta">📅 01/03 – 03/03/2024 · Villa</div>
+            <div class="bhi-row">
+              <span class="bhi-price">9.000.000đ</span>
+              <span class="status-tag st-cancel">❌ Đã huỷ</span>
+            </div>
+          </div>
+        </div>
+        <div style="height:10px"></div>
+        <div class="bottom-nav-mock">
+          <div class="bnav-item"><div class="bi">🏠</div><div class="bl">Trang chủ</div></div>
+          <div class="bnav-item"><div class="bi">🔍</div><div class="bl">Tìm kiếm</div></div>
+          <div class="bnav-item"><div class="bi">🛒</div><div class="bl">Giỏ hàng</div></div>
+          <div class="bnav-item active"><div class="bi">👤</div><div class="bl" style="color:var(--pink)">Tài khoản</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="info-panel">
+      <div class="annotation">
+        <h4>📌 Thành phần</h4>
+        <ul>
+          <li>Profile header: avatar initials, tên, email, ngày tham gia</li>
+          <li>Stats strip: số lần đặt phòng, rating trung bình, tổng chi tiêu</li>
+          <li>3 tabs: Lịch sử / Đổi mật khẩu / Yêu thích</li>
+          <li>Booking item: ảnh KS, tên, loại phòng, ngày, giá, status badge</li>
+          <li>Status: ✅ Đã TT · 🏠 Đang ở · ❌ Huỷ · ⏳ Chờ xác nhận</li>
+          <li>Inline "Đánh giá" button chỉ hiện khi status hợp lệ</li>
+        </ul>
+      </div>
+      <div class="annotation">
+        <h4>📊 API</h4>
+        <ul>
+          <li><span class="tag">GET /api/bookings/my</span> — lịch sử đặt phòng theo user</li>
+          <li><span class="tag">DELETE /api/bookings/:id</span> — huỷ đơn pending</li>
+          <li><span class="tag">POST /api/reviews</span> — gửi đánh giá sau checkout</li>
+          <li><span class="tag">PUT /api/auth/change-password</span> — đổi mật khẩu</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ SCREEN 9: ADMIN DASHBOARD ══════════════════════════ -->
+<section class="screen" id="s9">
+<div class="screen-wrap">
+  <div class="screen-label">
+    <div><span class="badge">Màn hình 09</span><h2>Admin Dashboard</h2><p>Tổng quan doanh thu, quản lý KS &amp; đơn đặt phòng, CRUD</p></div>
+  </div>
+  <div class="wide-frame">
+    <div class="admin-shell">
+      <!-- Sidebar -->
+      <div class="admin-sb">
+        <div class="admin-sb-logo">🏨 mytour<span>Admin Panel</span></div>
+        <div class="admin-nav-i active"><span class="ni">📊</span> Dashboard</div>
+        <div class="admin-nav-i"><span class="ni">🏨</span> Khách sạn</div>
+        <div class="admin-nav-i"><span class="ni">📋</span> Đặt phòng</div>
+        <div class="admin-nav-i"><span class="ni">👥</span> Người dùng</div>
+        <div class="admin-nav-i"><span class="ni">↩</span> Trang chủ</div>
+      </div>
+      <!-- Main -->
+      <div class="admin-main">
+        <div class="admin-top">
+          <div class="admin-page-title">📊 Dashboard tổng quan</div>
+          <div class="admin-top-right">
+            <div class="admin-search-mock"><span>🔍</span> Tìm kiếm...</div>
+            <div style="font-size:12px;color:var(--muted)">Thứ 6, 02/05/2024</div>
+            <div class="admin-avatar">A</div>
+          </div>
+        </div>
+
+        <!-- Stat cards -->
+        <div class="stat-grid-mock">
+          <div class="stat-card-mock highlight">
+            <div class="sc-icon">💰</div>
+            <div class="sc-val">85.4M</div>
+            <div class="sc-label">Doanh thu tháng</div>
+            <div class="sc-trend">↑ +12.3% vs tháng trước</div>
+          </div>
+          <div class="stat-card-mock">
+            <div class="sc-icon">📋</div>
+            <div class="sc-val">142</div>
+            <div class="sc-label">Đặt phòng tháng</div>
+            <div class="sc-trend" style="color:var(--success)">↑ +8 đơn so với tuần trước</div>
+          </div>
+          <div class="stat-card-mock">
+            <div class="sc-icon">👥</div>
+            <div class="sc-val">1.847</div>
+            <div class="sc-label">Tổng khách hàng</div>
+            <div class="sc-trend" style="color:var(--success)">↑ 34 mới tuần này</div>
+          </div>
+          <div class="stat-card-mock">
+            <div class="sc-icon">🏨</div>
+            <div class="sc-val">6</div>
+            <div class="sc-label">Khách sạn hoạt động</div>
+            <div class="sc-trend" style="color:var(--muted)">Ổn định</div>
+          </div>
+        </div>
+
+        <!-- Charts row -->
+        <div class="chart-row">
+          <div class="chart-card">
+            <h4>📈 Doanh thu 7 ngày gần nhất</h4>
+            <div class="bar-chart">
+              <div class="bar" style="height:45%"><span class="bar-label">T2</span></div>
+              <div class="bar" style="height:62%"><span class="bar-label">T3</span></div>
+              <div class="bar" style="height:55%"><span class="bar-label">T4</span></div>
+              <div class="bar highlight" style="height:88%"><span class="bar-label">T5</span></div>
+              <div class="bar" style="height:72%"><span class="bar-label">T6</span></div>
+              <div class="bar highlight" style="height:95%"><span class="bar-label">T7</span></div>
+              <div class="bar" style="height:68%"><span class="bar-label">CN</span></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:20px;font-size:11px;color:var(--muted)">
+              <span>Tổng tuần: <strong style="color:var(--ink)">18.2M đ</strong></span>
+              <span>Đặt phòng: <strong style="color:var(--ink)">38 đơn</strong></span>
+              <span>TB/đơn: <strong style="color:var(--ink)">478k đ</strong></span>
+            </div>
+          </div>
+          <div class="chart-card">
+            <h4>🥧 Tỷ lệ trạng thái</h4>
+            <div class="donut-wrap">
+              <div class="donut"></div>
+              <div class="donut-legend">
+                <div class="dl-item"><div class="dl-dot" style="background:var(--pink)"></div>Đã xác nhận (58%)</div>
+                <div class="dl-item"><div class="dl-dot" style="background:var(--pink-mid)"></div>Đang ở (22%)</div>
+                <div class="dl-item"><div class="dl-dot" style="background:#E8F4FD"></div>Chờ xử lý (20%)</div>
+              </div>
+            </div>
+            <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;justify-content:space-between;font-size:11px"><span style="color:var(--muted)">Tỷ lệ hài lòng</span><strong style="color:var(--success)">97.2%</strong></div>
+              <div style="display:flex;justify-content:space-between;font-size:11px"><span style="color:var(--muted)">Tỷ lệ huỷ phòng</span><strong style="color:var(--warn)">3.8%</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent bookings table -->
+        <div class="admin-table-mock">
+          <div class="atm-head">
+            <h4>⚡ Đặt phòng gần nhất</h4>
+            <a>Xem tất cả →</a>
+          </div>
+          <div class="atm-row head">
+            <div>Khách hàng</div>
+            <div>Khách sạn</div>
+            <div>Tổng tiền</div>
+            <div>Trạng thái</div>
+            <div>Ngày tạo</div>
+          </div>
+          <div class="atm-row data">
+            <div><strong>Nguyễn Thảo</strong><br><span style="font-size:11px;color:var(--muted)">MT-2024-0XA7</span></div>
+            <div class="atm-hotel">Vinpearl Landmark 81</div>
+            <div class="atm-amount">2.625.000đ</div>
+            <div><span class="atm-status" style="background:#d5f5e3;color:#1e8449">✅ Đã TT</span></div>
+            <div style="font-size:11px;color:var(--muted)">02/05/2024</div>
+          </div>
+          <div class="atm-row data">
+            <div><strong>Trần Minh</strong><br><span style="font-size:11px;color:var(--muted)">MT-2024-0XA6</span></div>
+            <div class="atm-hotel">Rex Hotel Saigon</div>
+            <div class="atm-amount">1.700.000đ</div>
+            <div><span class="atm-status" style="background:#fef9e7;color:#d68910">⏳ Chờ XN</span></div>
+            <div style="font-size:11px;color:var(--muted)">01/05/2024</div>
+          </div>
+          <div class="atm-row data">
+            <div><strong>Lê Hoa</strong><br><span style="font-size:11px;color:var(--muted)">MT-2024-0XA5</span></div>
+            <div class="atm-hotel">Caravelle Saigon</div>
+            <div class="atm-amount">4.200.000đ</div>
+            <div><span class="atm-status" style="background:#d5f5e3;color:#1e8449">✅ Đã TT</span></div>
+            <div style="font-size:11px;color:var(--muted)">30/04/2024</div>
+          </div>
+          <div class="atm-row data">
+            <div><strong>Phạm Hùng</strong><br><span style="font-size:11px;color:var(--muted)">MT-2024-0XA4</span></div>
+            <div class="atm-hotel">InterContinental ĐN</div>
+            <div class="atm-amount">9.000.000đ</div>
+            <div><span class="atm-status" style="background:#fde8e8;color:#c0392b">❌ Đã huỷ</span></div>
+            <div style="font-size:11px;color:var(--muted)">29/04/2024</div>
+          </div>
+          <div class="atm-row data">
+            <div><strong>Vũ Lan Anh</strong><br><span style="font-size:11px;color:var(--muted)">MT-2024-0XA3</span></div>
+            <div class="atm-hotel">Fusion Maia Đà Nẵng</div>
+            <div class="atm-amount">11.600.000đ</div>
+            <div><span class="atm-status" style="background:#d6eaf8;color:#1a5276">🏠 Đang ở</span></div>
+            <div style="font-size:11px;color:var(--muted)">28/04/2024</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Annotations below for admin -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:24px">
+    <div class="annotation">
+      <h4>📌 Dashboard Modules</h4>
+      <ul>
+        <li>4 Stat cards: doanh thu, đặt phòng, khách hàng, KS hoạt động — với trend indicator</li>
+        <li>Bar chart doanh thu 7 ngày dùng Canvas API</li>
+        <li>Donut chart tỷ lệ trạng thái đặt phòng (CSS conic-gradient)</li>
+        <li>Recent bookings table với status badge màu sắc</li>
+      </ul>
+    </div>
+    <div class="annotation">
+      <h4>🏨 Module Quản lý KS</h4>
+      <ul>
+        <li>Table với columns: ID, tên, thành phố, sao, trạng thái</li>
+        <li>Nút "Thêm mới" → Modal form: tên, thành phố, sao, địa chỉ, mô tả</li>
+        <li>Nút "Sửa" → Modal pre-filled, PUT /api/hotels/:id</li>
+        <li>Nút "Ẩn/Hiện" → soft delete, is_active toggle</li>
+      </ul>
+    </div>
+    <div class="annotation">
+      <h4>📋 Module Quản lý Đơn</h4>
+      <ul>
+        <li>Bảng đơn đặt phòng: mã, khách, KS, tiền, trạng thái</li>
+        <li>Dropdown inline cập nhật trạng thái: pending → confirmed → checked_in → checked_out</li>
+        <li>Filter theo trạng thái, tìm theo mã/tên KH</li>
+        <li>API: <span class="tag">PUT /api/bookings/:id/status</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ SCRIPT ══════════════════════════════════════════════ -->
+<script>
+const screens = ['ds','s1','s2','s3','s4','s5','s6','s7','s8','s9'];
+function show(id) {
+  screens.forEach(s => {
+    document.getElementById(s).classList.toggle('active', s === id);
+  });
+  document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', screens[i] === id);
+  });
+  window.scrollTo({ top: 64, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

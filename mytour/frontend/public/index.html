@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mytour.vn - Đặt khách sạn trực tuyến, giá tốt nhất Việt Nam">
+  <title>Mytour.vn - Đặt Khách Sạn Trực Tuyến</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏨</text></svg>">
+  <!-- CSS dùng đường dẫn tuyệt đối từ root -->
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    /* Fallback inline để đảm bảo luôn có style cơ bản */
+    body { font-family: 'Segoe UI', sans-serif; margin: 0; }
+    #app-loading {
+      display: flex; align-items: center; justify-content: center;
+      height: 100vh; flex-direction: column; gap: 16px;
+      background: linear-gradient(135deg, #993556, #D4537E);
+      color: white;
+    }
+    #app-loading .logo { font-size: 48px; }
+    #app-loading .text { font-size: 20px; font-weight: 600; }
+    #app-loading .sub  { font-size: 14px; opacity: 0.8; }
+  </style>
+</head>
+<body>
+
+  <!-- Loading screen hiển thị trong khi JS khởi động -->
+  <div id="app-loading">
+    <div class="logo">🏨</div>
+    <div class="text">My Tour.vn</div>
+    <div class="sub">Đang tải...</div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="main-navbar" style="display:none">
+    <div class="container">
+      <a class="navbar-brand" onclick="navigate('home')" style="cursor:pointer">🏨 My Tour</a>
+      <div class="navbar-search">
+        <input type="text" placeholder="Tìm khách sạn, thành phố..." id="nav-search-input"
+          onkeydown="if(event.key==='Enter') navigate('hotels',{q:this.value})">
+        <button onclick="navigate('hotels',{q:document.getElementById('nav-search-input').value})">🔍</button>
+      </div>
+      <nav class="navbar-nav">
+        <a class="nav-link" data-page="home"   onclick="navigate('home')">Trang chủ</a>
+        <a class="nav-link" data-page="hotels" onclick="navigate('hotels')">Khách sạn</a>
+        <!-- Guest -->
+        <div id="navbar-guest" style="display:flex;gap:6px">
+          <button class="nav-btn" onclick="navigate('login')">Đăng nhập</button>
+          <button class="nav-btn primary" onclick="navigate('register')">Đăng ký</button>
+        </div>
+        <!-- User -->
+        <div id="navbar-user" class="hidden" style="display:flex;align-items:center;gap:8px">
+          <a class="nav-link cart-badge" onclick="navigate('cart')" style="cursor:pointer;position:relative">
+            🛒 <span class="badge" id="cart-badge-num" style="display:none">0</span>
+          </a>
+          <a id="admin-link" class="nav-link hidden" onclick="navigate('admin',{section:'dashboard'})" style="cursor:pointer">⚙️ Admin</a>
+          <div class="user-menu" id="user-menu-wrap">
+            <div class="user-avatar" id="user-initials" onclick="toggleDropdown()">U</div>
+            <div class="dropdown-menu hidden" id="user-dropdown">
+              <div class="dropdown-item" onclick="navigate('profile',{tab:'bookings'});closeDropdown()">📋 Hồ sơ Khách hàng</div>
+              <div class="dropdown-item" onclick="navigate('profile',{tab:'password'});closeDropdown()">🔑 Đổi mật khẩu</div>
+              <div class="dropdown-item danger" onclick="logout();closeDropdown()">🚪 Đăng xuất</div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </nav>
+
+  <!-- App mount point -->
+  <main id="app"></main>
+
+  <!-- Footer -->
+  <footer class="footer" id="main-footer" style="display:none">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">🏨 mytour.vn</div>
+          <p class="footer-desc">Nền tảng đặt phòng khách sạn trực tuyến hàng đầu Việt Nam. Hàng nghìn lựa chọn từ bình dân đến sang trọng trên toàn quốc.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Khám phá</h4>
+          <a onclick="navigate('hotels',{city:'Hồ Chí Minh'})">Khách sạn TP.HCM</a>
+          <a onclick="navigate('hotels',{city:'Đà Nẵng'})">Khách sạn Đà Nẵng</a>
+          <a onclick="navigate('hotels',{city:'Hà Nội'})">Khách sạn Hà Nội</a>
+          <a onclick="navigate('hotels',{stars:'5'})">Khách sạn 5 sao</a>
+        </div>
+        <div class="footer-col">
+          <h4>Hỗ trợ</h4>
+          <a>Trung tâm trợ giúp</a>
+          <a>Chính sách huỷ phòng</a>
+          <a>Hướng dẫn đặt phòng</a>
+          <a>Liên hệ chúng tôi</a>
+        </div>
+        <div class="footer-col">
+          <h4>Về Mytour</h4>
+          <a>Giới thiệu</a>
+          <a>Tuyển dụng</a>
+          <a>Điều khoản sử dụng</a>
+          <a>Chính sách bảo mật</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2024 Mytour.vn — Đặt phòng thông minh, giá tốt nhất</span>
+        <span>🇻🇳 Việt Nam · 📞 1900 1234 · ✉️ support@mytour.vn</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast container -->
+  <div id="toast-container"></div>
+
+  <!-- Load app.js -->
+  <script src="/js/app.js"></script>
+  <script>
+    // Ẩn loading, hiện navbar/footer sau khi JS load xong
+    window.addEventListener('load', function() {
+      var loading = document.getElementById('app-loading');
+      var navbar  = document.getElementById('main-navbar');
+      var footer  = document.getElementById('main-footer');
+      if (loading) loading.style.display = 'none';
+      if (navbar)  navbar.style.display  = '';
+      if (footer)  footer.style.display  = '';
+    });
+
+    function toggleDropdown() {
+      document.getElementById('user-dropdown').classList.toggle('hidden');
+    }
+    function closeDropdown() {
+      document.getElementById('user-dropdown').classList.add('hidden');
+    }
+    document.addEventListener('click', function(e) {
+      if (!document.getElementById('user-menu-wrap').contains(e.target)) closeDropdown();
+    });
+  </script>
+</body>
+</html>
