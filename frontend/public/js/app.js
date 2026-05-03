@@ -134,6 +134,8 @@ window.showAuthModal = (tab = 'login', redirect = null) => {
           <button class="btn btn-primary btn-block btn-lg" onclick="doLogin('${redirect||''}')">Đăng nhập</button>
           <div class="oauth-divider">hoặc</div>
           <button class="btn btn-ghost btn-block" onclick="window.location='/api/auth/google'">🌐 Tiếp tục với Google</button>
+          
+          <button class="btn btn-ghost btn-block" onclick="window.location='/api/auth/github'">🌐 Tiếp tục với Github</button>
         </div>
 
         <div id="auth-register-form" style="${tab==='login'?'display:none':''}">

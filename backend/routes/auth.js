@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const router  = express.Router();
 const bcrypt  = require('bcryptjs');
@@ -7,6 +8,7 @@ const jwt = require('jsonwebtoken'); // Import thêm jwt nếu chưa có
 const nodemailer = require('nodemailer');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const GitHubStrategy = require('passport-github2').Strategy;
 
 // Cấu hình Nodemailer gửi email
 const transporter = nodemailer.createTransport({
@@ -181,4 +183,82 @@ router.get('/google/callback', passport.authenticate('google', { session: false,
   res.redirect('/#home'); 
 });
 
+passport.use(new GitHubStrategy({
+    clientID: process.env.GITHUB_CLIENT_ID,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    callbackURL: "/api/auth/github/callback"
+  },
+  async (accessToken, refreshToken, profile, done) => {
+    try {
+      // ⚠️ GitHub KHÔNG luôn trả email
+      let email = profile.emails && profile.emails[0]?.value;
+
+      // fallback nếu không có email
+      if (!email) {
+        email = profile.username + "@github.local";
+      }
+
+      const [rows] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
+      let user;
+      
+      if (rows.length > 0) {
+        user = rows[0];
+        if (!user.oauth_id) {
+          await db.query(
+            'UPDATE users SET oauth_provider = "github", oauth_id = ?, is_verified = 1 WHERE email = ?',
+            [profile.id, email]
+          );
+        }
+      } else {
+        const [result] = await db.query(
+          'INSERT INTO users (username, email, role, oauth_provider, oauth_id, is_verified) VALUES (?, ?, "customer", "github", ?, 1)',
+          [profile.username, email, profile.id]
+        );
+
+        user = {
+          id: result.insertId,
+          email,
+          role: 'customer',
+          username: profile.username
+        };
+      }
+
+      return done(null, user);
+    } catch (err) {
+      return done(err, null);
+    }
+  }
+));
+
+// ── GET /api/auth/github ─────────────────────────────────────
+router.get('/github',
+  passport.authenticate('github', {
+    scope: ['user:email'],
+    session: false
+  })
+);
+
+// ── GET /api/auth/github/callback ────────────────────────────
+router.get('/github/callback',
+  passport.authenticate('github', {
+    session: false,
+    failureRedirect: '/'
+  }),
+  (req, res) => {
+    const token = generateToken({
+      id: req.user.id,
+      email: req.user.email,
+      role: req.user.role,
+      username: req.user.username
+    });
+
+    res.cookie('token', token, {
+      httpOnly: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      sameSite: 'lax'
+    });
+
+    res.redirect('/#home');
+  }
+);
 module.exports = router;
