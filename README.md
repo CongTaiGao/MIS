@@ -3,6 +3,8 @@
 Thực hiện:
 - Cao Thông Thái (Deploy và vận hành)
 - Nguyễn Bá Vượng (Code chính)
+- Trần Khánh Vinh (Xây dựng BI thông minh)
+- Nguyễn Hoàng Việt (Phân tích hệ thống)
 
 > **Đồ án TMĐT** — Framework: Node.js + Express · Database: MySQL · Frontend: Vanilla JS SPA · Deploy: Vercel / Railway / Render
 
