@@ -1,5 +1,9 @@
 # 🏨 Mytour.vn — Hệ thống đặt phòng khách sạn trực tuyến
 
+Thực hiện:
+- Cao Thông Thái (Deploy và vận hành)
+- Nguyễn Bá Vượng (Code chính)
+
 > **Đồ án TMĐT** — Framework: Node.js + Express · Database: MySQL · Frontend: Vanilla JS SPA · Deploy: Vercel / Railway / Render
 
 ---
